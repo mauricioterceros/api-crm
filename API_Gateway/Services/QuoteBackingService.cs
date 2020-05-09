@@ -15,7 +15,7 @@ namespace Services
         {
             _configuration = configuration;
         }
-        Task<QuoteBsDTO> IQuoteBackingService.AddNewQuote(QuoteBsDTO newQuote)
+        public Task<QuoteBsDTO> AddNewQuote(QuoteBsDTO newQuote)
         {
             throw new NotImplementedException();
         }
@@ -58,16 +58,16 @@ namespace Services
 
                        
         }
-        void IQuoteBackingService.UpdateQuote(string id, QuoteBsDTO updatedQuote)
+        public void UpdateQuote(string id, QuoteBsDTO updatedQuote)
         {
             throw new NotImplementedException();
         }
 
-        void IQuoteBackingService.DeleteByID(string id)
+        public void DeleteByID(string id)
         {
             throw new NotImplementedException();
         }
-        void IQuoteBackingService.UpdateSale(string id, bool state)
+        public void UpdateSale(string id, bool state)
         {
             throw new NotImplementedException();
         }

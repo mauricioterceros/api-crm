@@ -24,31 +24,7 @@ namespace API_Gateway.Controllers
             [Route("")]
             public List<QuoteBsDTO> Get()
             {
-                return _quoteDB.GetQuoteList.Result;
-            }
-
-            [HttpGet]
-            [Route("{id}")]
-            public IEnumerable<string> GetById()
-            {
-                throw new NotImplementedException();
-            }
-        }
-        [Route("api-crm/products")]
-        [ApiController]
-        public class ProductController : ControllerBase
-        {
-            private readonly IQuoteBackingService _quoteDB;
-            public ProductController(IQuoteBackingService productBS)
-            {
-                _quoteDB = productBS;
-            }
-
-            [HttpGet]
-            [Route("")]
-            public List<QuoteBsDTO> Get()
-            {
-                //return _quoteDB.GetQuoteList.Result;
+                return _quoteDB.GetQuoteList().Result;
             }
 
             [HttpGet]
