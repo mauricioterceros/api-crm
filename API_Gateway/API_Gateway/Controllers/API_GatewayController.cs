@@ -8,31 +8,28 @@ using Services;
 
 namespace API_Gateway.Controllers
 {
+    [Route("api-crm/quotes")]
+    [ApiController]
     public class API_GatewayController : ControllerBase
     {
-        [Route("api-crm/quotes")]
-        [ApiController]
-        public class QuoteController : ControllerBase
+        private readonly IQuoteBackingService _quoteDB;
+        public API_GatewayController(IQuoteBackingService productBS)
         {
-            private readonly IQuoteBackingService _quoteDB;
-            public QuoteController(IQuoteBackingService productBS)
-            {
-                _quoteDB = productBS;
-            }
+            _quoteDB = productBS;
+        }
 
-            [HttpGet]
-            [Route("")]
-            public List<QuoteBsDTO> Get()
-            {
-                return _quoteDB.GetQuoteList().Result;
-            }
+        [HttpGet]
+        [Route("")]
+        public List<QuoteBsDTO> Get()
+        {
+            return _quoteDB.GetQuoteList().Result;
+        }
 
-            [HttpGet]
-            [Route("{id}")]
-            public IEnumerable<string> GetById()
-            {
-                throw new NotImplementedException();
-            }
+        [HttpGet]
+        [Route("{id}")]
+        public IEnumerable<string> GetById()
+        {
+            throw new NotImplementedException();
         }
     }
 }

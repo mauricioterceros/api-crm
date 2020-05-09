@@ -24,7 +24,7 @@ namespace Services
             try
             {
                 // Creating HTTP Client
-                HttpClient productMS = new HttpClient();
+                HttpClient quoteMS = new HttpClient();
 
                 string msPath = _configuration.GetSection("Microservices").GetSection("Quoting").Value;
 
@@ -33,7 +33,7 @@ namespace Services
                 // HttpContent content = new 
                 // HttpResponseMessage response = await productMS.GetAsync($"{msPath}/pricing-books/PricingBook-001");
                 // HttpResponseMessage response = await productMS.GetAsync($"{msPath}/campaigns/Campaigns-001");
-                HttpResponseMessage response = await productMS.GetAsync($"{msPath}/quotes");
+                HttpResponseMessage response = await quoteMS.GetAsync($"{msPath}/api/quotes");
 
                 int statusCode = (int)response.StatusCode;
                 if (statusCode == 200) // OK
@@ -48,11 +48,13 @@ namespace Services
                 else
                 {
                     // something wrong happens!
+                    Console.WriteLine("BS throws the error: " + statusCode);
                     throw new BackingServiceException("BS throws the error: " + statusCode);
                 }
             }
             catch (Exception ex)
             {
+                //Console.WriteLine("Connection with Products is not working: " + msPath);
                 throw new BackingServiceException("Connection with Products is not working: " + ex.Message);
             }
 
