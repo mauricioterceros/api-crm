@@ -8,11 +8,33 @@ using Services;
 
 namespace API_Gateway.Controllers
 {
+    [Route("api-crm/clients")]
+    [ApiController]
+    public class Clients : ControllerBase
+    {
+        private readonly IClientsBackingService _clientsDB;
+
+        public Clients(IClientsBackingService productBS1)
+        {
+            _clientsDB = productBS1;
+        }
+
+        [HttpGet]
+        [Route("")]
+        public List<ClientsBsDTO> Get()
+        {
+            return _clientsDB.GetClients().Result;
+        }
+
+        ///
+    }
+
     [Route("api-crm/quotes")]
     [ApiController]
     public class API_GatewayController : ControllerBase
     {
         private readonly IQuoteBackingService _quoteDB;
+
         public API_GatewayController(IQuoteBackingService productBS)
         {
             _quoteDB = productBS;
@@ -31,5 +53,8 @@ namespace API_Gateway.Controllers
         {
             throw new NotImplementedException();
         }
+
+        ///
+        
     }
 }
