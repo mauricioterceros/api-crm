@@ -9,7 +9,7 @@ using BackingServices.Exceptions;
 
 namespace Services
 {
-    class PricingBooksBs : IPricingBookBs
+    public class PricingBooksBs : IPricingBookBs
 
     {
         HttpClient productMS = new HttpClient();

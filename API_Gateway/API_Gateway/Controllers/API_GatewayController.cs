@@ -36,12 +36,29 @@ namespace API_Gateway.Controllers
 
     }
 
-    class PricingBook : ControllerBase
+    [Route("api-crm/PricingBooks")]
+    [ApiController]
+    public class PricingBook : ControllerBase
     {
-       /* [Route("api-crm/")]
-        [ApiController]
+        private readonly IPricingBookBs _pricingDB;
+        public PricingBook(IPricingBookBs pricingBook)
+        {
+            _pricingDB = pricingBook;
+        }
+        [HttpGet]
+        [Route("")]
+        public List<PricingBookBsDTO> GetAll()
+        {
+            return _pricingDB.GetAll().Result;
+        }
 
-        private readonly IPricingBookBs _pricingDB; */
+        [HttpGet]
+        [Route("{id}")]
+        public IEnumerable<ProductPriceBsDTO> GetProduct(string id)
+        {
+            return _pricingDB.GetProducts(id).Result;
+        }
+
 
 
     }

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Services
 {
-    class PricingBookBsDTO
+    public class PricingBookBsDTO
     {
         public string Id { get; set; }
 
