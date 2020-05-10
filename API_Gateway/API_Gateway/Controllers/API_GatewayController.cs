@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using API_Gateway;
 using Services;
 
 namespace API_Gateway.Controllers
@@ -31,5 +32,18 @@ namespace API_Gateway.Controllers
         {
             throw new NotImplementedException();
         }
+
     }
+
+    class PricingBook : ControllerBase
+    {
+       /* [Route("api-crm/")]
+        [ApiController]
+
+        private readonly IPricingBookBs _pricingDB; */
+
+
+    }
+
+
 }
