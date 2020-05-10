@@ -13,6 +13,7 @@ namespace API_Gateway.Controllers
     public class API_GatewayController : ControllerBase
     {
         private readonly IQuoteBackingService _quoteDB;
+   
         public API_GatewayController(IQuoteBackingService productBS)
         {
             _quoteDB = productBS;
