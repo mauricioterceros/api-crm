@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace BackingServices
+namespace Services
 {
     class ProductPriceBsDTO
     {
