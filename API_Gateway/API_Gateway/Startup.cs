@@ -47,6 +47,7 @@ namespace API_Gateway
                                       .AllowAnyHeader()
                                       .AllowAnyMethod()
                                       );
+
             });
 
             var swaggerTitle = Configuration

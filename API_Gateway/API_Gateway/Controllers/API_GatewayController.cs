@@ -45,6 +45,7 @@ namespace API_Gateway.Controllers
         {
             _pricingDB = pricingBook;
         }
+
         [HttpGet]
         [Route("")]
         public List<PricingBookBsDTO> GetAll()

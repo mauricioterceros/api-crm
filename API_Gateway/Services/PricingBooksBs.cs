@@ -91,7 +91,9 @@ namespace Services
 
                 string msPath = _configuration.GetSection("Microservices").GetSection("PricingBooks").Value;
 
-                HttpResponseMessage response = await productMS.GetAsync($"{msPath}/getProducts");
+                HttpResponseMessage response = await productMS.GetAsync($"{msPath}/pricing-books/{id}/product-prices");
+                //HttpResponseMessage response = await productMS.GetAsync($"{msPath}/pricing-books/PricingBook-1/product-prices");
+
                 int statusCode = (int)response.StatusCode;
                 if (statusCode == 200) // OK
                 {
