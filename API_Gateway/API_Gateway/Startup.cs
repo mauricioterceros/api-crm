@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BackingServices;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -38,7 +39,7 @@ namespace API_Gateway
             services.AddControllers();
 
             services.AddTransient<IQuoteBackingService, QuoteBackingService>();
-
+            services.AddTransient<ICampaignBackingService, CampaignBackingService>();
             services.AddCors(options =>
             {
                 options.AddPolicy("AllowAll",
