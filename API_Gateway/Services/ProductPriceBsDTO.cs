@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Services
 {
-    class ProductPriceBsDTO
+    public class ProductPriceBsDTO
     {
         public string ProductCode { get; set; }
 

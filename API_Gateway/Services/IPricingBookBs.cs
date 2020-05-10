@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Services
 {
-    interface IPricingBookBs
+    public interface IPricingBookBs
 
     {
         public  Task<List<PricingBookBsDTO>> GetAll();
