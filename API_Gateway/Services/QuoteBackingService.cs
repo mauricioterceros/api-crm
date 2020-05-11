@@ -187,7 +187,8 @@ namespace Services
                 //HttpContent updateQuoteHTTP = new StringContent(updateQuoteString, Encoding.UTF8, "application/json");
 
                 String value = state ? "sell" : "cancel-sell";
-                HttpResponseMessage response = await quoteMS.GetAsync($"{msPath}/api/quotes/{id}/{value}");
+                HttpContent idHTTP = new StringContent(id);
+                HttpResponseMessage response = await quoteMS.PutAsync($"{msPath}/api/quotes/{id}/{value}", idHTTP);
 
                 int statusCode = (int)response.StatusCode;
                 if (statusCode == 200) // OK
