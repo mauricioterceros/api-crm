@@ -18,6 +18,13 @@ namespace API_Gateway.Controllers
             _quoteDB = productBS;
         }
 
+        [HttpPost]
+        [Route("")]
+        public QuoteBsDTO Post([FromBody] QuoteBsDTO newQuoteDTO)
+        {
+            return _quoteDB.AddNewQuote(newQuoteDTO).Result;
+        }
+
         [HttpGet]
         [Route("")]
         public List<QuoteBsDTO> Get()
@@ -25,11 +32,25 @@ namespace API_Gateway.Controllers
             return _quoteDB.GetQuoteList().Result;
         }
 
-        [HttpGet]
+        [HttpPut]
         [Route("{id}")]
-        public IEnumerable<string> GetById()
+        public string Put(string id, [FromBody] QuoteBsDTO updateQuoteDTO)
         {
-            throw new NotImplementedException();
+            return _quoteDB.UpdateQuote(id, updateQuoteDTO).Result;
+        }
+
+        [HttpDelete]
+        [Route("{id}")]
+        public string Delete(string id)
+        {
+            return _quoteDB.DeleteByID(id).Result;
+        }
+
+        [HttpPut]
+        [Route("{id}/{state}")]
+        public string PutSale(string id, bool state)
+        {
+            return _quoteDB.UpdateSale(id, state).Result;
         }
     }
 }
