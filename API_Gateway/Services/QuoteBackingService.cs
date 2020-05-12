@@ -156,7 +156,7 @@ namespace Services
                     // Read ASYNC response from HTTPResponse 
                     String jsonResponse = await response.Content.ReadAsStringAsync();
                     // Deserialize response
-                    QuoteBsDTO quote = JsonConvert.DeserializeObject<QuoteBsDTO>(jsonResponse);
+                    //QuoteBsDTO quote = JsonConvert.DeserializeObject<QuoteBsDTO>(jsonResponse);
 
                     return jsonResponse;
                 }
@@ -196,7 +196,7 @@ namespace Services
                     // Read ASYNC response from HTTPResponse 
                     String jsonResponse = await response.Content.ReadAsStringAsync();
                     // Deserialize response
-                    QuoteBsDTO quote = JsonConvert.DeserializeObject<QuoteBsDTO>(jsonResponse);
+                    //QuoteBsDTO quote = JsonConvert.DeserializeObject<QuoteBsDTO>(jsonResponse);
 
                     return jsonResponse;
                 }
