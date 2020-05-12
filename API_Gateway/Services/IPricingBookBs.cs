@@ -8,17 +8,18 @@ namespace Services
     public interface IPricingBookBs
 
     {
-        public  Task<List<PricingBookBsDTO>> GetAll();
-        public Task<PricingBookBsDTO> Update(PricingBookBsDTO pricingBookToUpdate, string id);
-        public Task<PricingBookBsDTO> AddNew(PricingBookBsDTO newPricingBook);
-        public void Delete(string code);
+        public  Task<List<PricingBookBsDTO>> GetAll();//
+        public Task<PricingBookBsDTO> Update(PricingBookBsDTO pricingBookToUpdate, string id);//
+        public Task<PricingBookBsDTO> AddNew(PricingBookBsDTO newPricingBook);//
+        public Task<String> Delete(string code);//
         public void Activate(string id);
         public void DeActivate(string id);
 
-        public Task<PricingBookBsDTO> AddNewProduct(List<ProductPriceBsDTO> newProducts, string id);
-        public Task<List<ProductPriceBsDTO>> GetProducts(string id);
-        public Task<PricingBookBsDTO> UpdateProduct(List<ProductPriceBsDTO> productToUpdate, string id);
-        void DeleteProduct(string code);
-        void DeleteProductCode(string code, string productcode);
+        public Task<ProductPriceBsDTO> AddNewProduct(PricingBookBsDTO newProducts, string id);//
+        public Task<List<ProductPriceBsDTO>> GetProducts(string id);//
+        public Task<ProductPriceBsDTO> UpdateProduct(PricingBookBsDTO productToUpdate, string id);//
+        public Task <String> DeleteProduct(string code);//
+        public Task<String> DeleteProductCode(string id, string code);//
+        
     }
 }

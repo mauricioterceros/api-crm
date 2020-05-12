@@ -58,6 +58,12 @@ namespace API_Gateway.Controllers
         {
             return _pricingDB.AddNew(NewPB).Result;
         }
+        [HttpDelete]
+        [Route("pricing-books/{id}")]
+        public string Delete(string id)
+        {
+            return _pricingDB.Delete(id).Result;
+        }
 
         [HttpPut]
         [Route("{id}")]
@@ -66,13 +72,43 @@ namespace API_Gateway.Controllers
             return _pricingDB.Update(pricingBookToUpdate, id).Result;
         }
 
+        [HttpPost]
+        [Route("")]
+        public ProductPriceBsDTO PostProductPrices([FromBody]PricingBookBsDTO NewPB, string id)
+        {
+            return _pricingDB.AddNewProduct(NewPB, id).Result;
+        }
+
         [HttpGet]
         [Route("{id}")]
         public IEnumerable<ProductPriceBsDTO> GetProduct(string id)
         {
             return _pricingDB.GetProducts(id).Result;
         }
-       
+        [HttpPut]
+        [Route("{id}")]
+        public ProductPriceBsDTO PutProductPrice([FromBody]PricingBookBsDTO productPrice, string id)
+        {
+            return _pricingDB.UpdateProduct(productPrice, id).Result;
+        }
+
+        //Delete pricings
+        [HttpDelete]
+        [Route("{id}")]
+        public string DeletePricing(string code)
+        {
+            return _pricingDB.Delete(code).Result;
+        }
+
+        //Delete ID
+        [HttpDelete]
+        [Route("{id}/product-prices/{code}")]
+        public string Delete(string id, string code)
+        {
+            return _pricingDB.DeleteProductCode(id, code).Result;
+        }
+
+
 
 
     }
