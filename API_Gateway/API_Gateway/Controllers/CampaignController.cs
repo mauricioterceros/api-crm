@@ -39,10 +39,10 @@ namespace API_Gateway.Controllers
         // PUT: api/Campaign/5
         [HttpPut]
         [Route("{id}")]
-        public void Put([FromBody]CampaignBsDTO campaign, string id)
+        public CampaignBsDTO Put([FromBody]CampaignBsDTO campaign, string id)
         {
-            //preguntar inge
-            _campaignBS.UpdateCampaing(campaign, id);
+
+            return _campaignBS.UpdateCampaing(campaign, id).Result;
 
         }
         

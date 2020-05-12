@@ -82,14 +82,17 @@ namespace BackingServices
         }
 
         //PUT
-        public async Task<CampaignBsDTO> UpdateCampaing(CampaignBsDTO campaign, string id)
+        public async Task<CampaignBsDTO> UpdateCampaing(CampaignBsDTO campaignUpdate, string id)
         {
+            String CampignUpdateString = JsonConvert.SerializeObject(campaignUpdate);
+            HttpContent CampaignUpdateHTTP = new StringContent(CampignUpdateString, Encoding.UTF8, "application/json");
+
             try
             {
                 HttpClient campaignMS = new HttpClient();
 
                 string msPath = _configuration.GetSection("Microservices").GetSection("Campaigns").Value;
-                HttpResponseMessage response = await campaignMS.GetAsync($"{msPath}/campaigns/{id}");
+                HttpResponseMessage response = await campaignMS.PutAsync($"{msPath}/api/campaigns/{id}", CampaignUpdateHTTP);
 
                 int statusCode = (int)response.StatusCode;
                 if (statusCode == 200)
