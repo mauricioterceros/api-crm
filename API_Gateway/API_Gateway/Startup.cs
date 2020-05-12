@@ -1,4 +1,4 @@
-    using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -37,9 +37,9 @@ namespace API_Gateway
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-
-            services.AddTransient<IQuoteBackingService, QuoteBackingService>();
             services.AddTransient<ICampaignBackingService, CampaignBackingService>();
+            services.AddTransient<IQuoteBackingService, QuoteBackingService>();
+            
             services.AddCors(options =>
             {
                 options.AddPolicy("AllowAll",

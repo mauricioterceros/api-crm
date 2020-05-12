@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using BackingServices;
+using BackingServices.Exceptions;
 
 namespace BackingServices
 {
@@ -18,7 +18,40 @@ namespace BackingServices
             _configuration = configuration;
         }
 
-        public async Task<List<CampaignBsDTO>> GetAllCampaign()
+        //GET
+                    //preguntar, esta parte tiene que exactamente al controller que estamos implementando
+                    //el campaing utiliza un IEnumerable y no un list
+        public async Task<IEnumerable<CampaignBsDTO>> GetAllCampaign()
+        {
+            try
+            {
+                HttpClient campaignMS = new HttpClient();
+
+                string msPath = _configuration.GetSection("Microservices").GetSection("Campaigns").Value;
+                HttpResponseMessage response = await campaignMS.GetAsync($"{msPath}/api/campaigns");
+
+                int statusCode = (int)response.StatusCode;
+                if (statusCode == 200)
+                {
+                    String jsonResponse = await response.Content.ReadAsStringAsync();
+                    IEnumerable<CampaignBsDTO> campaigns = JsonConvert.DeserializeObject<IEnumerable<CampaignBsDTO>>(jsonResponse);
+
+                    return campaigns;
+                }
+                else
+                {
+                    throw new BackingServiceException("BS throws the error: " + statusCode);
+                }
+            }
+            catch (Exception ex)
+            {
+              throw new BackingServiceException("Connection with Products is not working: " + ex.Message);
+            }
+        }
+
+        //POST
+                        //aqui no utiliza una lista, solo el objeto y como atriburos igual el objeto
+        public async Task<CampaignBsDTO> AddNewCampaign(CampaignBsDTO campaign)
         {
             try
             {
@@ -31,19 +64,137 @@ namespace BackingServices
                 if (statusCode == 200)
                 {
                     String jsonResponse = await response.Content.ReadAsStringAsync();
-                    List<CampaignBsDTO> campaigns = JsonConvert.DeserializeObject<List<CampaignBsDTO>>(jsonResponse);
+                    //por lo tanto aqui tambien quite la lista
+                    CampaignBsDTO campaigns = JsonConvert.DeserializeObject<CampaignBsDTO>(jsonResponse);
 
                     return campaigns;
                 }
                 else
                 {
-                    throw new NotImplementedException();
+                    throw new BackingServiceException("BS throws the error: " + statusCode);
                 }
             }
             catch (Exception ex)
             {
-                throw new NotImplementedException();
+                throw new BackingServiceException("Connection with Products is not working: " + ex.Message);
             }
         }
+
+        //PUT
+        public async Task<CampaignBsDTO> UpdateCampaing(CampaignBsDTO campaign, string id)
+        {
+            try
+            {
+                HttpClient campaignMS = new HttpClient();
+
+                string msPath = _configuration.GetSection("Microservices").GetSection("Campaigns").Value;
+                HttpResponseMessage response = await campaignMS.GetAsync($"{msPath}/campaigns/{id}");
+
+                int statusCode = (int)response.StatusCode;
+                if (statusCode == 200)
+                {
+                    String jsonResponse = await response.Content.ReadAsStringAsync();
+                    CampaignBsDTO campaigns = JsonConvert.DeserializeObject<CampaignBsDTO>(jsonResponse);
+
+                    return campaigns;
+                }
+                else
+                {
+                    throw new BackingServiceException("BS throws the error: " + statusCode);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new BackingServiceException("Connection with Products is not working: " + ex.Message);
+            }
+
+        }
+
+        //POST-ACTIVATE
+        public async Task<CampaignBsDTO> ActivateCampaign(string id)
+        {
+            try
+            {
+                HttpClient campaignMS = new HttpClient();
+
+                string msPath = _configuration.GetSection("Microservices").GetSection("Campaigns").Value;
+                HttpResponseMessage response = await campaignMS.GetAsync($"{msPath}/campaigns/{id}/activate");
+
+                int statusCode = (int)response.StatusCode;
+                if (statusCode == 200)
+                {
+                    String jsonResponse = await response.Content.ReadAsStringAsync();
+                    CampaignBsDTO campaigns = JsonConvert.DeserializeObject<CampaignBsDTO>(jsonResponse);
+
+                    return campaigns;
+                }
+                else
+                {
+                    throw new BackingServiceException("BS throws the error: " + statusCode);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new BackingServiceException("Connection with Products is not working: " + ex.Message);
+            }
+        }
+
+        //POST-DEACTIVATE
+        public async Task<CampaignBsDTO> DeactivateCampaign(string id)
+        {
+            try
+            {
+                HttpClient campaignMS = new HttpClient();
+
+                string msPath = _configuration.GetSection("Microservices").GetSection("Campaigns").Value;
+                HttpResponseMessage response = await campaignMS.GetAsync($"{msPath}/campaigns/{id}/deactivate");
+
+                int statusCode = (int)response.StatusCode;
+                if (statusCode == 200)
+                {
+                    String jsonResponse = await response.Content.ReadAsStringAsync();
+                    CampaignBsDTO campaigns = JsonConvert.DeserializeObject<CampaignBsDTO>(jsonResponse);
+
+                    return campaigns;
+                }
+                else
+                {
+                    throw new BackingServiceException("BS throws the error: " + statusCode);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new BackingServiceException("Connection with Products is not working: " + ex.Message);
+            }
+        }
+        /*
+        //DELETE
+        public async Task DeleteCampaign(string id)
+        {
+            try
+            {
+                HttpClient campaignMS = new HttpClient();
+
+                string msPath = _configuration.GetSection("Microservices").GetSection("Campaigns").Value;
+                HttpResponseMessage response = await campaignMS.GetAsync($"{msPath}/campaigns/{id}");
+
+                int statusCode = (int)response.StatusCode;
+                if (statusCode == 200)
+                {
+                    String jsonResponse = await response.Content.ReadAsStringAsync();
+                    CampaignBsDTO campaigns = JsonConvert.DeserializeObject<CampaignBsDTO>(jsonResponse);
+
+                    
+                }
+                else
+                {
+                    throw new BackingServiceException("BS throws the error: " + statusCode);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new BackingServiceException("Connection with Products is not working: " + ex.Message);
+            }
+        }*/
     }
 }
