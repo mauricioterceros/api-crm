@@ -36,7 +36,7 @@ namespace API_Gateway.Controllers
 
     }
 
-    [Route("api-crm/PricingBooks")]
+    [Route("api-crm/Pricing-Books")]
     [ApiController]
     public class PricingBook : ControllerBase
     {
@@ -52,6 +52,19 @@ namespace API_Gateway.Controllers
         {
             return _pricingDB.GetAll().Result;
         }
+        [HttpPost]
+        [Route("")]
+        public PricingBookBsDTO PostPricingBooks([FromBody]PricingBookBsDTO NewPB)
+        {
+            return _pricingDB.AddNew(NewPB).Result;
+        }
+
+        [HttpPut]
+        [Route("{id}")]
+        public PricingBookBsDTO PutPricingBooks([FromBody]PricingBookBsDTO pricingBookToUpdate, string id)
+        {
+            return _pricingDB.Update(pricingBookToUpdate, id).Result;
+        }
 
         [HttpGet]
         [Route("{id}")]
@@ -59,7 +72,7 @@ namespace API_Gateway.Controllers
         {
             return _pricingDB.GetProducts(id).Result;
         }
-
+       
 
 
     }
