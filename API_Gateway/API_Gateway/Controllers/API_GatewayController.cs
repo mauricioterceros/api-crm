@@ -59,7 +59,6 @@ namespace API_Gateway.Controllers
             return _productDB.AddNew(newproductDTO).Result;
         }
 
-        // PUT api/product/5
         [HttpPut]
         [Route("product/{id}")]
         public ProductBsDTO PutProduct(string id, [FromBody] ProductBsDTO updateProduct)
@@ -70,14 +69,12 @@ namespace API_Gateway.Controllers
 
         }
 
-        // DELETE api/product/5
-
-/*        [HttpDelete]
+        [HttpDelete]
         [Route("{id}")]
         public bool Delete(string id)
         {
-            return _productDB.deleteProduct(id);
-        }*/
+            return _productDB.Delete(id).Result;
+        }
     }
 
 

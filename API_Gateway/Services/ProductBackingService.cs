@@ -53,8 +53,6 @@ namespace BackingServices
                     // something wrong happens!
                     throw new NotImplementedException();
                 }
-                //List<ProductBsDTO> productss = JsonConvert.DeserializeObject<List<ProductBsDTO>>(File.ReadAllText(_dbPath));
-                //return productss;
             }
             catch (Exception ex)
             {
@@ -86,8 +84,6 @@ namespace BackingServices
                     // something wrong happens!
                     throw new NotImplementedException();
                 }
-                //List<ProductBsDTO> productss = JsonConvert.DeserializeObject<List<ProductBsDTO>>(File.ReadAllText(_dbPath));
-                //return productss;
             }
             catch (Exception ex)
             {
@@ -119,8 +115,6 @@ namespace BackingServices
                     // something wrong happens!
                     throw new NotImplementedException();
                 }
-                //List<ProductBsDTO> productss = JsonConvert.DeserializeObject<List<ProductBsDTO>>(File.ReadAllText(_dbPath));
-                //return productss;
             }
             catch (Exception ex)
             {
@@ -129,9 +123,31 @@ namespace BackingServices
             }
         }
 
-        public async void Delete(string id)
+        public async Task<bool> Delete(string id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                HttpResponseMessage response = await productMS.DeleteAsync($"{msPath}/product/{id}");
+                int statusCode = (int)response.StatusCode;
+                if (statusCode == 200) // OK
+                {
+                    // Read ASYNC response from HTTPResponse 
+                    String jsonResponse = await response.Content.ReadAsStringAsync();
+                    // Deserialize response
+                    //ProductBsDTO products = JsonConvert.DeserializeObject<ProductBsDTO>(jsonResponse);
+                    bool answer = JsonConvert.DeserializeObject<bool>(jsonResponse);
+                    return answer;
+                }
+                else
+                {
+                    throw new NotImplementedException();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new BackingServiceException("Connection with Products is not working! " + msPath);
+
+            }
         }
 
     }

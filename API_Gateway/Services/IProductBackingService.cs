@@ -8,6 +8,6 @@ namespace BackingServices
         public Task<List<ProductBsDTO>> GetAllProduct();
         public Task<ProductBsDTO> AddNew(ProductBsDTO newproductDTO);
         public Task<ProductBsDTO> Update(ProductBsDTO newproductDTO, string id);
-        public void Delete(string id);
+        public Task<bool> Delete(string id);
     }
 }
