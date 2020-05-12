@@ -45,7 +45,7 @@ namespace API_Gateway.Controllers
         {
             _pricingDB = pricingBook;
         }
-
+        /*************IPriceBook****************/
         [HttpGet]
         [Route("")]
         public List<PricingBookBsDTO> GetAll()
@@ -59,10 +59,10 @@ namespace API_Gateway.Controllers
             return _pricingDB.AddNew(NewPB).Result;
         }
         [HttpDelete]
-        [Route("pricing-books/{id}")]
-        public string Delete(string id)
+        [Route("{id}")]
+        public Task<bool> Delete(string id)
         {
-            return _pricingDB.Delete(id).Result;
+            return _pricingDB.DeleteListProduct(id);
         }
 
         [HttpPut]
@@ -73,45 +73,62 @@ namespace API_Gateway.Controllers
         }
 
         [HttpPost]
-        [Route("")]
-        public ProductPriceBsDTO PostProductPrices([FromBody]PricingBookBsDTO NewPB, string id)
+        [Route("pricing-books/{id}/activate")]
+        public string ActivatePost(string id)
         {
-            return _pricingDB.AddNewProduct(NewPB, id).Result;
+            return _pricingDB.Activate(id).Result;
+       
         }
 
+        [HttpPost]
+        [Route("pricing-books/{id}/deactivate")]
+        public string DeActivatePost(string id)
+        {
+            return _pricingDB.DeActivate(id).Result;
+           
+        }
+        /******************IPricingBo ***********************/
+        [HttpPost]
+        [Route("pricing-books/{id}/product-prices")]
+        public PricingBookBsDTO Post([FromBody]List<ProductPriceBsDTO> newProductDTO, string id)
+        {
+            return _pricingDB.AddNewProduct(newProductDTO, id).Result;
+        }
+        
         [HttpGet]
         [Route("{id}")]
         public IEnumerable<ProductPriceBsDTO> GetProduct(string id)
         {
             return _pricingDB.GetProducts(id).Result;
         }
+
+      /*  
         [HttpPut]
         [Route("{id}")]
-        public ProductPriceBsDTO PutProductPrice([FromBody]PricingBookBsDTO productPrice, string id)
+        public PricingBookBsDTO PutProductPrice([FromBody]List<ProductPriceBsDTO> productPrice, string id)
         {
             return _pricingDB.UpdateProduct(productPrice, id).Result;
         }
-
+        */
+        
         //Delete pricings
         [HttpDelete]
         [Route("{id}")]
         public string DeletePricing(string code)
         {
-            return _pricingDB.Delete(code).Result;
+           return _pricingDB.DeleteProduct(code).Result;
         }
-
+        
         //Delete ID
         [HttpDelete]
         [Route("{id}/product-prices/{code}")]
-        public string Delete(string id, string code)
+        public void Delete(string id, string code)
         {
-            return _pricingDB.DeleteProductCode(id, code).Result;
+            _pricingDB.DeleteProductCode(id, code);
         }
 
-
-
-
+    
     }
-
+    
 
 }

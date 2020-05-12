@@ -91,12 +91,135 @@ namespace Services
         //Put
         public  async Task<PricingBookBsDTO> Update(PricingBookBsDTO pricingBookToUpdate, string id)
         {
+        try
+        {
+            String newPBString = JsonConvert.SerializeObject(pricingBookToUpdate);
+            HttpContent newPBHTTP = new StringContent(newPBString, Encoding.UTF8, "application/json");
+
+            HttpResponseMessage response = await productMS.PutAsync($"{msPath}/pricing-books/{id}", newPBHTTP);
+
+            int statusCode = (int)response.StatusCode;
+            if (statusCode == 200) // OK
+            {
+                // Read ASYNC response from HTTPResponse 
+                String jsonResponse = await response.Content.ReadAsStringAsync();
+                // Deserialize response
+                PricingBookBsDTO pricing = JsonConvert.DeserializeObject<PricingBookBsDTO>(jsonResponse);
+
+                return pricing;
+            }
+            else
+            {
+                // something wrong happens!
+                throw new BackingServiceException("BS throws the error: " + statusCode);
+            }
+        }
+        catch (Exception ex)
+        {
+            throw new BackingServiceException("Connection with Products is not working: " + ex.Message);
+        }
+    
+
+}
+
+
+
+        public async Task<bool>  DeleteListProduct(string code)
+         {
             try
             {
-                String newPBString = JsonConvert.SerializeObject(pricingBookToUpdate);
+                //HttpContent content = new HttpContent();
+                HttpResponseMessage response = await productMS.DeleteAsync($"{msPath}/pricing-books/{code}");
+                int statusCode = (int)response.StatusCode;
+                if (statusCode == 200) // OK
+                {
+                    // Read ASYNC response from HTTPResponse 
+                    String jsonResponse = await response.Content.ReadAsStringAsync();
+                    // Deserialize response
+                    List<PricingBookBsDTO> pricings = JsonConvert.DeserializeObject<List<PricingBookBsDTO>>(jsonResponse);
+
+                    return true;
+                }
+                else
+                {
+                    // something wrong happens!
+                    throw new BackingServiceException("BS throws the error: " + statusCode);
+                  
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new BackingServiceException("Connection with Products is not working: " + ex.Message);
+            }
+        }
+    
+        public async Task<string> Activate(string id)
+        {
+            try
+            {
+                //HttpContent content = new HttpContent();
+                HttpResponseMessage response = await productMS.GetAsync($"{msPath}/pricing-books/{id}/activate");
+                int statusCode = (int)response.StatusCode;
+                if (statusCode == 200) // OK
+                {
+                    // Read ASYNC response from HTTPResponse 
+                    String jsonResponse = await response.Content.ReadAsStringAsync();
+                    Console.WriteLine(jsonResponse);
+                    // Deserialize response
+                    List<PricingBookBsDTO> pricings = JsonConvert.DeserializeObject<List<PricingBookBsDTO>>(jsonResponse);
+
+                    return jsonResponse;
+                }
+                else
+                {
+                    // something wrong happens!
+                    throw new BackingServiceException("BS throws the error: " + statusCode);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new BackingServiceException("Connection with Products is not working: " + ex.Message);
+            }
+
+        }
+        public async Task<string> DeActivate(string id)
+        {
+            try
+            {
+                //HttpContent content = new HttpContent();
+                HttpResponseMessage response = await productMS.GetAsync($"{msPath}/pricing-books/{id}/deactivate");
+                int statusCode = (int)response.StatusCode;
+                if (statusCode == 200) // OK
+                {
+                    // Read ASYNC response from HTTPResponse 
+                    String jsonResponse = await response.Content.ReadAsStringAsync();
+                    Console.WriteLine(jsonResponse);
+                    // Deserialize response
+                    List<PricingBookBsDTO> pricings = JsonConvert.DeserializeObject<List<PricingBookBsDTO>>(jsonResponse);
+
+                    return jsonResponse;
+                }
+                else
+                {
+                    // something wrong happens!
+                    throw new BackingServiceException("BS throws the error: " + statusCode);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new BackingServiceException("Connection with Products is not working: " + ex.Message);
+            }
+        }
+
+       /******************************************************************************************************/
+        public async  Task<PricingBookBsDTO> AddNewProduct(List<ProductPriceBsDTO> newProducts, string id)
+        {
+            try
+            {
+                String newPBString = JsonConvert.SerializeObject(newProducts);
                 HttpContent newPBHTTP = new StringContent(newPBString, Encoding.UTF8, "application/json");
 
-                HttpResponseMessage response = await productMS.PutAsync($"{msPath}/pricing-books/{id}", newPBHTTP);
+                HttpResponseMessage response = await productMS.PostAsync($"{msPath}/pricing-books/{id}/product-prices", newPBHTTP);
 
                 int statusCode = (int)response.StatusCode;
                 if (statusCode == 200) // OK
@@ -105,85 +228,6 @@ namespace Services
                     String jsonResponse = await response.Content.ReadAsStringAsync();
                     // Deserialize response
                     PricingBookBsDTO pricing = JsonConvert.DeserializeObject<PricingBookBsDTO>(jsonResponse);
-
-                    return pricing;
-                }
-                else
-                {
-                    // something wrong happens!
-                    throw new BackingServiceException("BS throws the error: " + statusCode);
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new BackingServiceException("Connection with Products is not working: " + ex.Message);
-            }
-    
-
-        }
-
-        
-        //delete 1
-        public async Task<String> Delete(string code)
-        {
-            try
-            {
-                // Creating HTTP Client
-                // HttpClient quoteMS = new HttpClient();
-
-                HttpResponseMessage response = await productMS.DeleteAsync($"{msPath}/api/pricing-book/{code}");
-
-                int statusCode = (int)response.StatusCode;
-                if (statusCode == 200) // OK
-                {
-                    // Read ASYNC response from HTTPResponse 
-                    String jsonResponse = await response.Content.ReadAsStringAsync();
-                    // Deserialize response
-                    PricingBookBsDTO quote = JsonConvert.DeserializeObject<PricingBookBsDTO>(jsonResponse);
-
-                    return jsonResponse;
-                }
-                else
-                {
-                    // something wrong happens!
-                    Console.WriteLine("BS throws the error: " + statusCode);
-                    throw new BackingServiceException("BS throws the error: " + statusCode);
-
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Connection with Products is not working: " + ex.Message);
-                throw new BackingServiceException("Connection with Products is not working: " + ex.Message);
-
-            }
-        }
-        public void Activate(string id)
-        {
-            throw new NotImplementedException();
-        }
-        public void DeActivate(string id)
-        {
-            throw new NotImplementedException();
-        }
-
-
-        public async Task<ProductPriceBsDTO> AddNewProduct(PricingBookBsDTO newProducts, string id)
-        {
-            try
-            {
-                String newPBString = JsonConvert.SerializeObject(newProducts);
-                HttpContent newPBHTTP = new StringContent(newPBString, Encoding.UTF8, "application/json");
-
-                HttpResponseMessage response = await productMS.PostAsync($"{msPath}/pricing-books", newPBHTTP);
-
-                int statusCode = (int)response.StatusCode;
-                if (statusCode == 200) // OK
-                {
-                    // Read ASYNC response from HTTPResponse 
-                    String jsonResponse = await response.Content.ReadAsStringAsync();
-                    // Deserialize response
-                    ProductPriceBsDTO pricing = JsonConvert.DeserializeObject<ProductPriceBsDTO>(jsonResponse);
 
                     return pricing;
                 }
@@ -229,14 +273,15 @@ namespace Services
                 throw new BackingServiceException("Connection with Products is not working: " + ex.Message);
             }
         }
-        public async Task<ProductPriceBsDTO> UpdateProduct(PricingBookBsDTO productToUpdate, string id)
+        public async Task<PricingBookBsDTO> UpdateProduct(List<ProductPriceBsDTO> productToUpdate, string id)
         {
+
             try
             {
                 String newPBString = JsonConvert.SerializeObject(productToUpdate);
                 HttpContent newPBHTTP = new StringContent(newPBString, Encoding.UTF8, "application/json");
 
-                HttpResponseMessage response = await productMS.PutAsync($"{msPath}/pricing-books/{id}", newPBHTTP);
+                HttpResponseMessage response = await productMS.PutAsync($"{msPath}/pricing-books/{id}/product-prices", newPBHTTP);
 
                 int statusCode = (int)response.StatusCode;
                 if (statusCode == 200) // OK
@@ -244,7 +289,7 @@ namespace Services
                     // Read ASYNC response from HTTPResponse 
                     String jsonResponse = await response.Content.ReadAsStringAsync();
                     // Deserialize response
-                    ProductPriceBsDTO pricing = JsonConvert.DeserializeObject<ProductPriceBsDTO>(jsonResponse);
+                    PricingBookBsDTO pricing = JsonConvert.DeserializeObject<PricingBookBsDTO>(jsonResponse);
 
                     return pricing;
                 }
@@ -260,81 +305,65 @@ namespace Services
             }
         }
 
-        //delete 2
         public async Task<string> DeleteProduct(string code)
         {
             try
             {
-                // Creating HTTP Client
-                // HttpClient quoteMS = new HttpClient();
-
-
-
-                HttpResponseMessage response = await productMS.DeleteAsync($"{msPath}/api/product-prices/{code}");
-
+                //HttpContent content = new HttpContent();
+                HttpResponseMessage response = await productMS.DeleteAsync($"{msPath}/pricing-books/{code}/product-prices");
                 int statusCode = (int)response.StatusCode;
                 if (statusCode == 200) // OK
                 {
                     // Read ASYNC response from HTTPResponse 
                     String jsonResponse = await response.Content.ReadAsStringAsync();
                     // Deserialize response
-                    PricingBookBsDTO quote = JsonConvert.DeserializeObject<PricingBookBsDTO>(jsonResponse);
+                    List<PricingBookBsDTO> pricings = JsonConvert.DeserializeObject<List<PricingBookBsDTO>>(jsonResponse);
+                    //String msg = "Deleted" + code;
 
                     return jsonResponse;
+
                 }
                 else
                 {
                     // something wrong happens!
-                    Console.WriteLine("BS throws the error: " + statusCode);
                     throw new BackingServiceException("BS throws the error: " + statusCode);
-
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Connection with Products is not working: " + ex.Message);
                 throw new BackingServiceException("Connection with Products is not working: " + ex.Message);
+            }
+        }
 
+        public async Task<string> DeleteProductCode(string code, string productcode)
+        {
+            try
+            {
+                //HttpContent content = new HttpContent();
+                HttpResponseMessage response = await productMS.DeleteAsync($"{msPath}/pricing-books/{code}/product-prices/{productcode}");
+                int statusCode = (int)response.StatusCode;
+                if (statusCode == 200) // OK
+                {
+                    // Read ASYNC response from HTTPResponse 
+                    String jsonResponse = await response.Content.ReadAsStringAsync();
+                    // Deserialize response
+                    List<PricingBookBsDTO> pricings = JsonConvert.DeserializeObject<List<PricingBookBsDTO>>(jsonResponse);
+                    //String msg = "Deleted" + code;
+                    return jsonResponse;
+
+                }
+                else
+                {
+                    // something wrong happens!
+                    throw new BackingServiceException("BS throws the error: " + statusCode);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new BackingServiceException("Connection with Products is not working: " + ex.Message);
             }
         }
 
         
-        //delete 3
-        public async Task<String> DeleteProductCode(string id, string code)
-        {
-            try
-            {
-                // Creating HTTP Client
-                // HttpClient quoteMS = new HttpClient();
-
-                
-
-                HttpResponseMessage response = await productMS.DeleteAsync($"{msPath}/api/product-prices/{id}/{code}");
-
-                int statusCode = (int)response.StatusCode;
-                if (statusCode == 200) // OK
-                {
-                    // Read ASYNC response from HTTPResponse 
-                    String jsonResponse = await response.Content.ReadAsStringAsync();
-                    // Deserialize response
-                    ProductPriceBsDTO quote = JsonConvert.DeserializeObject<ProductPriceBsDTO>(jsonResponse);
-
-                    return jsonResponse;
-                }
-                else
-                {
-                    // something wrong happens!
-                    Console.WriteLine("BS throws the error: " + statusCode);
-                    throw new BackingServiceException("BS throws the error: " + statusCode);
-
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Connection with Products is not working: " + ex.Message);
-                throw new BackingServiceException("Connection with Products is not working: " + ex.Message);
-
-            }
-        }
     }
 }
