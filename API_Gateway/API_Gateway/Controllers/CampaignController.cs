@@ -48,11 +48,9 @@ namespace API_Gateway.Controllers
         
         [HttpPost]
         [Route("{id}/activate")]
-        public void Activate(string id)
+        public CampaignBsDTO Activate(string id)
         {
-            //preguntar inge
-            //como no dara ni un resultado, pues solo estoy haciendo que se conecten y que el usuario pueda hacer sus funciones no?
-            _campaignBS.ActivateCampaign(id);
+            return _campaignBS.ActivateCampaign(id).Result;
         }
         
         [HttpPost]

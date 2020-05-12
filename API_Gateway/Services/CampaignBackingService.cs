@@ -84,12 +84,12 @@ namespace BackingServices
         //PUT
         public async Task<CampaignBsDTO> UpdateCampaing(CampaignBsDTO campaignUpdate, string id)
         {
-            String CampignUpdateString = JsonConvert.SerializeObject(campaignUpdate);
-            HttpContent CampaignUpdateHTTP = new StringContent(CampignUpdateString, Encoding.UTF8, "application/json");
 
             try
             {
                 HttpClient campaignMS = new HttpClient();
+                String CampignUpdateString = JsonConvert.SerializeObject(campaignUpdate);
+                HttpContent CampaignUpdateHTTP = new StringContent(CampignUpdateString, Encoding.UTF8, "application/json");
 
                 string msPath = _configuration.GetSection("Microservices").GetSection("Campaigns").Value;
                 HttpResponseMessage response = await campaignMS.PutAsync($"{msPath}/api/campaigns/{id}", CampaignUpdateHTTP);
@@ -119,10 +119,13 @@ namespace BackingServices
         {
             try
             {
+                //CampaignBsDTO campaignActive;
                 HttpClient campaignMS = new HttpClient();
+                String CampignActivateString = JsonConvert.SerializeObject(id);
+                HttpContent CampaignUpdateHTTP = new StringContent(CampignActivateString, Encoding.UTF8, "application/json");
 
                 string msPath = _configuration.GetSection("Microservices").GetSection("Campaigns").Value;
-                HttpResponseMessage response = await campaignMS.GetAsync($"{msPath}/campaigns/{id}/activate");
+                HttpResponseMessage response = await campaignMS.GetAsync($"{msPath}/api/campaigns/{id}/activate");
 
                 int statusCode = (int)response.StatusCode;
                 if (statusCode == 200)
