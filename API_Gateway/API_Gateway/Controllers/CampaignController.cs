@@ -55,17 +55,17 @@ namespace API_Gateway.Controllers
         
         [HttpPost]
         [Route("{id}/deactivate")]
-        public void Deactivate(string id)
+        public CampaignBsDTO Deactivate(string id)
         {
-            _campaignBS.DeactivateCampaign(id);
+            return _campaignBS.DeactivateCampaign(id).Result;
             
         }
-        /*
+        
         [HttpDelete]
         [Route("{id}")]
         public void Delete(string id)
         {
             _campaignBS.DeleteCampaign(id);
-        }*/
+        }
     }
 }

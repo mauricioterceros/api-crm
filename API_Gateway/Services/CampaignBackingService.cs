@@ -121,8 +121,8 @@ namespace BackingServices
             {
                 //CampaignBsDTO campaignActive;
                 HttpClient campaignMS = new HttpClient();
-                String CampignActivateString = JsonConvert.SerializeObject(id);
-                HttpContent CampaignUpdateHTTP = new StringContent(CampignActivateString, Encoding.UTF8, "application/json");
+                //String CampignActivateString = JsonConvert.SerializeObject(id);
+                //HttpContent CampaignUpdateHTTP = new StringContent(CampignActivateString, Encoding.UTF8, "application/json");
 
                 string msPath = _configuration.GetSection("Microservices").GetSection("Campaigns").Value;
                 HttpResponseMessage response = await campaignMS.GetAsync($"{msPath}/api/campaigns/{id}/activate");
@@ -152,9 +152,11 @@ namespace BackingServices
             try
             {
                 HttpClient campaignMS = new HttpClient();
+                //String CampignDeactivateString = JsonConvert.SerializeObject(id);
+                //HttpContent CampaignUpdateHTTP = new StringContent(CampignDeactivateString, Encoding.UTF8, "application/json");
 
                 string msPath = _configuration.GetSection("Microservices").GetSection("Campaigns").Value;
-                HttpResponseMessage response = await campaignMS.GetAsync($"{msPath}/campaigns/{id}/deactivate");
+                HttpResponseMessage response = await campaignMS.GetAsync($"{msPath}/api/campaigns/{id}/deactivate");
 
                 int statusCode = (int)response.StatusCode;
                 if (statusCode == 200)
@@ -174,16 +176,18 @@ namespace BackingServices
                 throw new BackingServiceException("Connection with Products is not working: " + ex.Message);
             }
         }
-        /*
+        
         //DELETE
         public async Task DeleteCampaign(string id)
         {
             try
             {
                 HttpClient campaignMS = new HttpClient();
+                //String CampignDeleteString = JsonConvert.SerializeObject(id);
+                //HttpContent CampaignUpdateHTTP = new StringContent(CampignDeleteString, Encoding.UTF8, "application/json");
 
                 string msPath = _configuration.GetSection("Microservices").GetSection("Campaigns").Value;
-                HttpResponseMessage response = await campaignMS.GetAsync($"{msPath}/campaigns/{id}");
+                HttpResponseMessage response = await campaignMS.DeleteAsync($"{msPath}/api/campaigns/{id}");
 
                 int statusCode = (int)response.StatusCode;
                 if (statusCode == 200)
@@ -202,6 +206,6 @@ namespace BackingServices
             {
                 throw new BackingServiceException("Connection with Products is not working: " + ex.Message);
             }
-        }*/
+        }
     }
 }

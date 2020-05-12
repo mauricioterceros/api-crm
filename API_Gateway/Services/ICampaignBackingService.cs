@@ -12,6 +12,6 @@ namespace BackingServices
         public Task<CampaignBsDTO> UpdateCampaing(CampaignBsDTO campaignUpdate, string id);
         public Task<CampaignBsDTO> ActivateCampaign(string id);
         public Task<CampaignBsDTO> DeactivateCampaign(string id);
-        //public Task<CampaignBsDTO> DeleteCampaign(string id);
+        public Task DeleteCampaign(string id);
     }
 }
