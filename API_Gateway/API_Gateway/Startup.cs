@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Services;
+using BackingServices;
 
 namespace API_Gateway
 {
@@ -38,6 +39,7 @@ namespace API_Gateway
             services.AddControllers();
 
             services.AddTransient<IQuoteBackingService, QuoteBackingService>();
+            services.AddTransient<IProductBackingService, ProductBackingService>();
 
             services.AddCors(options =>
             {
