@@ -12,64 +12,35 @@ namespace Services
     public class PricingBooksBs : IPricingBookBs
 
     {
-        HttpClient productMS = new HttpClient();
         private readonly IConfiguration _configuration;
+
+        HttpClient productMS;
+        string msPath;
+        
+
         public PricingBooksBs(IConfiguration configuration)
         {
             _configuration = configuration;
-        }
-        
-
-        public void Activate(string id)
-        {
-            throw new NotImplementedException();
+            msPath = _configuration.GetSection("Microservices").GetSection("PricingBooks").Value;
+            productMS = new HttpClient();
         }
 
-        public Task<PricingBookBsDTO> AddNew(PricingBookBsDTO newPricingBook)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<PricingBookBsDTO> AddNewProduct(List<ProductPriceBsDTO> newProducts, string id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeActivate(string id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Delete(string code)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteProduct(string code)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteProductCode(string code, string productcode)
-        {
-            throw new NotImplementedException();
-        }
-
+        //Get
         public async Task<List<PricingBookBsDTO>> GetAll()
         {
             try
             {
-
-                string msPath = _configuration.GetSection("Microservices").GetSection("PricingBooks").Value;
-
+                //HttpContent content = new HttpContent();
                 HttpResponseMessage response = await productMS.GetAsync($"{msPath}/pricing-books");
                 int statusCode = (int)response.StatusCode;
                 if (statusCode == 200) // OK
                 {
                     // Read ASYNC response from HTTPResponse 
                     String jsonResponse = await response.Content.ReadAsStringAsync();
+                    Console.WriteLine(jsonResponse);
                     // Deserialize response
                     List<PricingBookBsDTO> pricings = JsonConvert.DeserializeObject<List<PricingBookBsDTO>>(jsonResponse);
+                    
                     return pricings;
                 }
                 else
@@ -83,6 +54,94 @@ namespace Services
                 throw new BackingServiceException("Connection with Products is not working: " + ex.Message);
             }
         }
+       
+        //Post
+        public async Task<PricingBookBsDTO> AddNew(PricingBookBsDTO newPricingBook)
+        {
+
+            try
+            {
+                String newPBString = JsonConvert.SerializeObject(newPricingBook);
+                HttpContent newPBHTTP = new StringContent(newPBString, Encoding.UTF8, "application/json");
+
+                HttpResponseMessage response = await productMS.PostAsync($"{msPath}/pricing-books", newPBHTTP);
+
+                int statusCode = (int)response.StatusCode;
+                if (statusCode == 200) // OK
+                {
+                    // Read ASYNC response from HTTPResponse 
+                    String jsonResponse = await response.Content.ReadAsStringAsync();
+                    // Deserialize response
+                    PricingBookBsDTO pricing = JsonConvert.DeserializeObject<PricingBookBsDTO>(jsonResponse);
+
+                    return pricing;
+                }
+                else
+                {
+                    // something wrong happens!
+                    throw new BackingServiceException("BS throws the error: " + statusCode);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new BackingServiceException("Connection with Products is not working: " + ex.Message);
+            }
+        }
+    
+        //Put
+        public  async Task<PricingBookBsDTO> Update(PricingBookBsDTO pricingBookToUpdate, string id)
+        {
+        try
+        {
+            String newPBString = JsonConvert.SerializeObject(pricingBookToUpdate);
+            HttpContent newPBHTTP = new StringContent(newPBString, Encoding.UTF8, "application/json");
+
+            HttpResponseMessage response = await productMS.PutAsync($"{msPath}/pricing-books/{id}", newPBHTTP);
+
+            int statusCode = (int)response.StatusCode;
+            if (statusCode == 200) // OK
+            {
+                // Read ASYNC response from HTTPResponse 
+                String jsonResponse = await response.Content.ReadAsStringAsync();
+                // Deserialize response
+                PricingBookBsDTO pricing = JsonConvert.DeserializeObject<PricingBookBsDTO>(jsonResponse);
+
+                return pricing;
+            }
+            else
+            {
+                // something wrong happens!
+                throw new BackingServiceException("BS throws the error: " + statusCode);
+            }
+        }
+        catch (Exception ex)
+        {
+            throw new BackingServiceException("Connection with Products is not working: " + ex.Message);
+        }
+    
+
+}
+
+        
+
+        public void Delete(string code)
+        {
+            throw new NotImplementedException();
+        }
+        public void Activate(string id)
+        {
+            throw new NotImplementedException();
+        }
+        public void DeActivate(string id)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public Task<PricingBookBsDTO> AddNewProduct(List<ProductPriceBsDTO> newProducts, string id)
+        {
+            throw new NotImplementedException();
+        }
 
         public async Task<List<ProductPriceBsDTO>> GetProducts(string id)
         {
@@ -91,7 +150,9 @@ namespace Services
 
                 string msPath = _configuration.GetSection("Microservices").GetSection("PricingBooks").Value;
 
-                HttpResponseMessage response = await productMS.GetAsync($"{msPath}/getProducts");
+                HttpResponseMessage response = await productMS.GetAsync($"{msPath}/pricing-books/{id}/product-prices");
+                //HttpResponseMessage response = await productMS.GetAsync($"{msPath}/pricing-books/PricingBook-1/product-prices");
+
                 int statusCode = (int)response.StatusCode;
                 if (statusCode == 200) // OK
                 {
@@ -112,15 +173,27 @@ namespace Services
                 throw new BackingServiceException("Connection with Products is not working: " + ex.Message);
             }
         }
-
-        public Task<PricingBookBsDTO> Update(PricingBookBsDTO pricingBookToUpdate, string id)
-        {
-            throw new NotImplementedException();
-        }
-
         public Task<PricingBookBsDTO> UpdateProduct(List<ProductPriceBsDTO> productToUpdate, string id)
         {
             throw new NotImplementedException();
         }
+
+        public void DeleteProduct(string code)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteProductCode(string code, string productcode)
+        {
+            throw new NotImplementedException();
+        }
+
+      
+
+       
+
+       
+
+       
     }
 }
