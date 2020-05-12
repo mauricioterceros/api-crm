@@ -13,12 +13,10 @@ namespace API_Gateway.Controllers
     public class CampaignController : ControllerBase
     {
         private readonly ICampaignBackingService _campaignBS;
-       // private IConfiguration _configuration;
 
-        public CampaignController(ICampaignBackingService campaignBS/*, IConfiguration configuration*/)
+        public CampaignController(ICampaignBackingService campaignBS)
         {
             _campaignBS = campaignBS;
-           // _configuration = configuration;
         }
 
         [HttpGet]
@@ -33,10 +31,8 @@ namespace API_Gateway.Controllers
         public CampaignBsDTO Post([FromBody] CampaignBsDTO campaign)
         {
             Console.WriteLine("from post => " + campaign.Id + " - " + campaign.Name + " - " + campaign.Type + " - " + campaign.Description);
-            //preguntar inge
-            _campaignBS.AddNewCampaign(campaign);
-            /*var dbServer = _configuration.GetSection("Database").GetSection("ServerName");
-            campaign.Name = $"{campaign.Name} data from {dbServer.Value}";*/
+            
+            campaign = _campaignBS.AddNewCampaign(campaign).Result;
             return campaign;
         }
         

@@ -50,21 +50,22 @@ namespace BackingServices
         }
 
         //POST
-                        //aqui no utiliza una lista, solo el objeto y como atriburos igual el objeto
-        public async Task<CampaignBsDTO> AddNewCampaign(CampaignBsDTO campaign)
+        public async Task<CampaignBsDTO> AddNewCampaign(CampaignBsDTO newCampaign)
         {
             try
             {
                 HttpClient campaignMS = new HttpClient();
+                String newCampignString = JsonConvert.SerializeObject(newCampaign);
+                HttpContent newCampaignHTTP = new StringContent(newCampignString, Encoding.UTF8, "application/json");
 
                 string msPath = _configuration.GetSection("Microservices").GetSection("Campaigns").Value;
-                HttpResponseMessage response = await campaignMS.GetAsync($"{msPath}/campaigns");
+                HttpResponseMessage response = await campaignMS.PostAsync($"{msPath}/api/campaigns", newCampaignHTTP);
 
                 int statusCode = (int)response.StatusCode;
                 if (statusCode == 200)
                 {
                     String jsonResponse = await response.Content.ReadAsStringAsync();
-                    //por lo tanto aqui tambien quite la lista
+                    
                     CampaignBsDTO campaigns = JsonConvert.DeserializeObject<CampaignBsDTO>(jsonResponse);
 
                     return campaigns;
