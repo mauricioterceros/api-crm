@@ -8,10 +8,11 @@ namespace BackingServices
     public interface ICampaignBackingService
     {
         public Task<IEnumerable<CampaignBsDTO>> GetAllCampaign();
+        //public Task<IEnumerable<CampaignBsDTO>> GetActivateCampaign();
         public Task<CampaignBsDTO> AddNewCampaign(CampaignBsDTO newCampaign);
-        public Task<CampaignBsDTO> UpdateCampaing(CampaignBsDTO campaignUpdate, string id);
-        public Task<CampaignBsDTO> ActivateCampaign(string id);
-        public Task<CampaignBsDTO> DeactivateCampaign(string id);
+        public Task UpdateCampaing(CampaignBsDTO campaignUpdate, string id);
+        public Task ActivateCampaign(string id);
+        public Task DeactivateCampaign(string id);
         public Task DeleteCampaign(string id);
     }
 }

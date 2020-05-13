@@ -26,38 +26,47 @@ namespace API_Gateway.Controllers
             return _campaignBS.GetAllCampaign().Result;
         }
         
+        /*
+        [HttpGet]
+        [Route("get-activate-campaign")]
+        public IEnumerable<CampaignBsDTO> GetAll()
+        {
+            return _campaignBS.GetActivateCampaign().Result;
+        }
+        */
+
         [HttpPost]
         [Route("")]
         public CampaignBsDTO Post([FromBody] CampaignBsDTO campaign)
         {
-            Console.WriteLine("from post => " + campaign.Id + " - " + campaign.Name + " - " + campaign.Type + " - " + campaign.Description);
+            //Console.WriteLine("from post => " + campaign.Id + " - " + campaign.Name + " - " + campaign.Type + " - " + campaign.Description);
             
-            campaign = _campaignBS.AddNewCampaign(campaign).Result;
-            return campaign;
+            return _campaignBS.AddNewCampaign(campaign).Result;
+            
         }
         
         // PUT: api/Campaign/5
         [HttpPut]
         [Route("{id}")]
-        public CampaignBsDTO Put([FromBody]CampaignBsDTO campaign, string id)
+        public void Put([FromBody]CampaignBsDTO campaign, string id)
         {
 
-            return _campaignBS.UpdateCampaing(campaign, id).Result;
+            _campaignBS.UpdateCampaing(campaign, id);
 
         }
         
         [HttpPost]
         [Route("{id}/activate")]
-        public CampaignBsDTO Activate(string id)
+        public void Activate(string id)
         {
-            return _campaignBS.ActivateCampaign(id).Result;
+           _campaignBS.ActivateCampaign(id);
         }
         
         [HttpPost]
         [Route("{id}/deactivate")]
-        public CampaignBsDTO Deactivate(string id)
+        public void Deactivate(string id)
         {
-            return _campaignBS.DeactivateCampaign(id).Result;
+            _campaignBS.DeactivateCampaign(id);
             
         }
         
