@@ -30,14 +30,12 @@ namespace Services
         {
             try
             {
-                //HttpContent content = new HttpContent();
                 HttpResponseMessage response = await productMS.GetAsync($"{msPath}/pricing-books");
                 int statusCode = (int)response.StatusCode;
                 if (statusCode == 200) // OK
                 {
                     // Read ASYNC response from HTTPResponse 
                     String jsonResponse = await response.Content.ReadAsStringAsync();
-                    Console.WriteLine(jsonResponse);
                     // Deserialize response
                     List<PricingBookBsDTO> pricings = JsonConvert.DeserializeObject<List<PricingBookBsDTO>>(jsonResponse);
                     
@@ -121,23 +119,14 @@ namespace Services
     
 
 }
-
-
-
         public async Task<bool>  DeleteListProduct(string code)
          {
             try
             {
-                //HttpContent content = new HttpContent();
                 HttpResponseMessage response = await productMS.DeleteAsync($"{msPath}/pricing-books/{code}");
                 int statusCode = (int)response.StatusCode;
                 if (statusCode == 200) // OK
                 {
-                    // Read ASYNC response from HTTPResponse 
-                    String jsonResponse = await response.Content.ReadAsStringAsync();
-                    // Deserialize response
-                    List<PricingBookBsDTO> pricings = JsonConvert.DeserializeObject<List<PricingBookBsDTO>>(jsonResponse);
-
                     return true;
                 }
                 else
@@ -157,14 +146,12 @@ namespace Services
         {
             try
             {
-                //HttpContent content = new HttpContent();
                 HttpResponseMessage response = await productMS.PostAsync($"{msPath}/pricing-books/{id}/activate", new StringContent(string.Empty));
                 int statusCode = (int)response.StatusCode;
                 if (statusCode == 200) // OK
                 {
                     // Read ASYNC response from HTTPResponse 
                     String jsonResponse = await response.Content.ReadAsStringAsync();
-                    Console.WriteLine(jsonResponse);
                     // Deserialize response
 
                     return jsonResponse;
@@ -185,14 +172,12 @@ namespace Services
         {
             try
             {
-                //HttpContent content = new HttpContent();
                 HttpResponseMessage response = await productMS.PostAsync($"{msPath}/pricing-books/{id}/deactivate", new StringContent(string.Empty));
                 int statusCode = (int)response.StatusCode;
                 if (statusCode == 200) // OK
                 {
                     // Read ASYNC response from HTTPResponse 
                     String jsonResponse = await response.Content.ReadAsStringAsync();
-                    Console.WriteLine(jsonResponse);
                     // Deserialize response
 
                     return jsonResponse;
@@ -315,8 +300,6 @@ namespace Services
                     // Read ASYNC response from HTTPResponse 
                     String jsonResponse = await response.Content.ReadAsStringAsync();
                     // Deserialize response
-                    List<PricingBookBsDTO> pricings = JsonConvert.DeserializeObject<List<PricingBookBsDTO>>(jsonResponse);
-                    //String msg = "Deleted" + code;
 
                     return jsonResponse;
 
@@ -345,8 +328,7 @@ namespace Services
                     // Read ASYNC response from HTTPResponse 
                     String jsonResponse = await response.Content.ReadAsStringAsync();
                     // Deserialize response
-                    List<PricingBookBsDTO> pricings = JsonConvert.DeserializeObject<List<PricingBookBsDTO>>(jsonResponse);
-                    //String msg = "Deleted" + code;
+                  
                     return jsonResponse;
 
                 }
