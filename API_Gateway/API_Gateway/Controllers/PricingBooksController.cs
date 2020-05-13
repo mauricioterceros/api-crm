@@ -44,7 +44,7 @@ namespace API_Gateway.Controllers
         }
         [HttpDelete]
         [Route("{id}")]
-        public Task<bool> Delete(string id)
+        public Task<bool> DeletePB(string id)
         {
             return _pricingDB.DeleteListProduct(id);
         }
@@ -81,28 +81,23 @@ namespace API_Gateway.Controllers
 
         
         [HttpPut]
-        [Route("{id}/product-price")]
+        [Route("{id}/product-prices")]
         public PricingBookBsDTO PutProductPrice([FromBody]List<ProductPriceBsDTO> productPrice, string id)
         {
             return _pricingDB.UpdateProduct(productPrice, id).Result;
         }
         
-        
-        //Delete pricings
-        
-        
-        //Delete ID
        
         [HttpDelete]
         [Route("{id}/product-prices")]
-        public string DeletePricing(string code)
+        public string DeletePricing(string id)
         {
-            return _pricingDB.DeleteProduct(code).Result;
+            return _pricingDB.DeleteProduct(id).Result;
         }
 
         [HttpDelete]
-        [Route("{id}/product-price/{code}")]
-        public void Delete(string id, string code)
+        [Route("{id}/product-prices/{code}")]
+        public void DeleteByCode(string id, string code)
         {
             _pricingDB.DeleteProductCode(id, code);
         }
