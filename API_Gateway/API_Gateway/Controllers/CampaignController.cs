@@ -25,15 +25,13 @@ namespace API_Gateway.Controllers
         {
             return _campaignBS.GetAllCampaign().Result;
         }
-        
-        /*
+
         [HttpGet]
-        [Route("get-activate-campaign")]
-        public IEnumerable<CampaignBsDTO> GetAll()
+        [Route("active")]
+        public CampaignBsDTO GetActive()
         {
-            return _campaignBS.GetActivateCampaign().Result;
+            return _campaignBS.GetCampaignActivate().Result;
         }
-        */
 
         [HttpPost]
         [Route("")]

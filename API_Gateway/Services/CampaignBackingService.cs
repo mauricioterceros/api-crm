@@ -47,22 +47,22 @@ namespace BackingServices
             }
         }
 
-        /*
-        //GET-ACTIVATE-CAMPAIGN
-        public async Task<IEnumerable<CampaignBsDTO>> GetActivateCampaign()
+        
+        //GET-ACTIVE
+        public async Task<CampaignBsDTO> GetCampaignActivate()
         {
             try
             {
                 HttpClient campaignMS = new HttpClient();
 
                 string msPath = _configuration.GetSection("Microservices").GetSection("Campaigns").Value;
-                HttpResponseMessage response = await campaignMS.GetAsync($"{msPath}/api/campaigns/CAMPAIGN-1");
+                HttpResponseMessage response = await campaignMS.GetAsync($"{msPath}/api/campaigns/active");
 
                 int statusCode = (int)response.StatusCode;
                 if (statusCode == 200)
                 {
                     String jsonResponse = await response.Content.ReadAsStringAsync();
-                    IEnumerable<CampaignBsDTO> campaigns = JsonConvert.DeserializeObject<IEnumerable<CampaignBsDTO>>(jsonResponse);
+                    CampaignBsDTO campaigns = JsonConvert.DeserializeObject<CampaignBsDTO>(jsonResponse);
 
                     return campaigns;
                 }
@@ -76,7 +76,7 @@ namespace BackingServices
                 throw new BackingServiceException("Connection with Campigns is not working: " + ex.Message);
             }
         }
-        */
+        
 
         //POST
         public async Task<CampaignBsDTO> AddNewCampaign(CampaignBsDTO newCampaign)
