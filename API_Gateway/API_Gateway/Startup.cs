@@ -38,7 +38,7 @@ namespace API_Gateway
             services.AddControllers();
 
             services.AddTransient<IQuoteBackingService, QuoteBackingService>();
-
+            services.AddTransient<IClientsBackingService, ClientsBackingService>();
             services.AddCors(options =>
             {
                 options.AddPolicy("AllowAll",
