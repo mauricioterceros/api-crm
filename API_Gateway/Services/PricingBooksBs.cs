@@ -158,7 +158,7 @@ namespace Services
             try
             {
                 //HttpContent content = new HttpContent();
-                HttpResponseMessage response = await productMS.GetAsync($"{msPath}/pricing-books/{id}/activate");
+                HttpResponseMessage response = await productMS.PostAsync($"{msPath}/pricing-books/{id}/activate", new StringContent(string.Empty));
                 int statusCode = (int)response.StatusCode;
                 if (statusCode == 200) // OK
                 {
@@ -166,7 +166,6 @@ namespace Services
                     String jsonResponse = await response.Content.ReadAsStringAsync();
                     Console.WriteLine(jsonResponse);
                     // Deserialize response
-                    List<PricingBookBsDTO> pricings = JsonConvert.DeserializeObject<List<PricingBookBsDTO>>(jsonResponse);
 
                     return jsonResponse;
                 }
@@ -187,7 +186,7 @@ namespace Services
             try
             {
                 //HttpContent content = new HttpContent();
-                HttpResponseMessage response = await productMS.GetAsync($"{msPath}/pricing-books/{id}/deactivate");
+                HttpResponseMessage response = await productMS.PostAsync($"{msPath}/pricing-books/{id}/deactivate", new StringContent(string.Empty));
                 int statusCode = (int)response.StatusCode;
                 if (statusCode == 200) // OK
                 {
@@ -195,7 +194,6 @@ namespace Services
                     String jsonResponse = await response.Content.ReadAsStringAsync();
                     Console.WriteLine(jsonResponse);
                     // Deserialize response
-                    List<PricingBookBsDTO> pricings = JsonConvert.DeserializeObject<List<PricingBookBsDTO>>(jsonResponse);
 
                     return jsonResponse;
                 }
