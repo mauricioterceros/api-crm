@@ -11,5 +11,6 @@ namespace Services
         public string Adress { get; set; }
         public string Phone { get; set; }
         public string Ranking { get; set; }
+        public string Code { get; set; }
     }
 }

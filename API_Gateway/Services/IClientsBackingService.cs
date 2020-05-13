@@ -7,9 +7,10 @@ namespace Services
 {
     public interface IClientsBackingService
     {
-        public Task<ClientsBsDTO> AddNewClient(ClientsBsDTO newClient);
+        public Task<List<RankingDTO>> GetRankings();
         public Task<List<ClientsBsDTO>> GetClients();
-        //public ClientsBsDTO UpdateClient(string code, ClientsBsDTO clientToUpdate);
-        //public ClientsBsDTO DeleteClient(string code);
+        public Task<ClientsBsDTO> AddNewClient(ClientsBsDTO newClient);
+        public Task<ClientsBsDTO> UpdateClient(string code, ClientsBsDTO clientToUpdate);
+        public Task<bool> DeleteClient(string code);
     }
 }

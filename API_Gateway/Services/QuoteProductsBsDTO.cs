@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Services
 {
-    public class QuoteProductsBsDTO
+    class QuoteProductsBsDTO
     {
         public string ProductCode { get; set; }
         public int Quantity { get; set; }
