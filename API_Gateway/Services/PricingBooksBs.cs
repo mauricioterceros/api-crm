@@ -343,7 +343,6 @@ namespace Services
                 throw new BackingServiceException("Connection with Products is not working: " + ex.Message);
             }
         }
-
         
     }
 }
