@@ -11,7 +11,7 @@ namespace API_Gateway.Controllers
 {
     
 
-    [Route("api-crm/pricing-books")]
+    [Route("/api-crm/pricing-books")]
     [ApiController]
     public class PricingBook : ControllerBase
     {
@@ -33,12 +33,7 @@ namespace API_Gateway.Controllers
         {
             return _pricingDB.AddNew(NewPB).Result;
         }
-        [HttpDelete]
-        [Route("{id}")]
-        public Task<bool> Delete(string id)
-        {
-            return _pricingDB.DeleteListProduct(id);
-        }
+       
         
 
         [HttpPut]
@@ -47,9 +42,14 @@ namespace API_Gateway.Controllers
         {
             return _pricingDB.Update(pricingBookToUpdate, id).Result;
         }
-
+        [HttpDelete]
+        [Route("{id}")]
+        public Task<bool> Delete(string id)
+        {
+            return _pricingDB.DeleteListProduct(id);
+        }
         [HttpPost]
-        [Route("pricing-books/{id}/activate")]
+        [Route("{id}/activate")]
         public string ActivatePost(string id)
         {
             return _pricingDB.Activate(id).Result;
@@ -57,22 +57,23 @@ namespace API_Gateway.Controllers
         }
 
         [HttpPost]
-        [Route("pricing-books/{id}/deactivate")]
+        [Route("{id}/deactivate")]
         public string DeActivatePost(string id)
         {
             return _pricingDB.DeActivate(id).Result;
            
         }
+
         /******************IPricingBo ***********************/
         [HttpPost]
-        [Route("pricing-books/product-prices/{id}")]
+        [Route("{id}/product-prices")]
         public PricingBookBsDTO Post([FromBody]List<ProductPriceBsDTO> newProductDTO, string id)
         {
             return _pricingDB.AddNewProduct(newProductDTO, id).Result;
         }
         
         [HttpGet]
-        [Route("{id}/product-price")]
+        [Route("{id}/product-prices")]
         public IEnumerable<ProductPriceBsDTO> GetProduct(string id)
         {
             return _pricingDB.GetProducts(id).Result;
@@ -91,20 +92,20 @@ namespace API_Gateway.Controllers
         
         
         //Delete ID
+       
         [HttpDelete]
-        [Route("product-price/{code}")]
-        public void Delete(string id, string code)
-        {
-            _pricingDB.DeleteProductCode(id, code);
-        }
-        [HttpDelete]
-        [Route("product-price/{id}")]
+        [Route("{id}/product-prices")]
         public string DeletePricing(string code)
         {
             return _pricingDB.DeleteProduct(code).Result;
         }
 
-
+        [HttpDelete]
+        [Route("{id}/product-price/{code}")]
+        public void Delete(string id, string code)
+        {
+            _pricingDB.DeleteProductCode(id, code);
+        }
     }
     
 

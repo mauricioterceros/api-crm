@@ -37,7 +37,7 @@ namespace API_Gateway
         {
             services.AddControllers();
 
-            
+           
             services.AddTransient<IPricingBookBs, PricingBooksBs>();
 
             services.AddCors(options =>
