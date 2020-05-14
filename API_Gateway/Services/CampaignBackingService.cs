@@ -19,7 +19,7 @@ namespace BackingServices
         }
 
         //GET
-        public async Task<IEnumerable<CampaignBsDTO>> GetAllCampaign()
+        public async Task<IEnumerable<CampaignBsDTO>> GetAllCampaigns()
         {
             try
             {
@@ -49,7 +49,7 @@ namespace BackingServices
 
         
         //GET-ACTIVE
-        public async Task<CampaignBsDTO> GetCampaignActivate()
+        public async Task<CampaignBsDTO> GetCampaignActive()
         {
             try
             {
@@ -128,8 +128,6 @@ namespace BackingServices
                 {
                     String jsonResponse = await response.Content.ReadAsStringAsync();
                     CampaignBsDTO campaigns = JsonConvert.DeserializeObject<CampaignBsDTO>(jsonResponse);
-
-                    //return campaigns;
                 }
                 else
                 {
@@ -158,8 +156,6 @@ namespace BackingServices
                 {
                     String jsonResponse = await response.Content.ReadAsStringAsync();
                     CampaignBsDTO campaigns = JsonConvert.DeserializeObject<CampaignBsDTO>(jsonResponse);
-
-                    //return campaigns;
                 }
                 else
                 {
@@ -187,8 +183,6 @@ namespace BackingServices
                 {
                     String jsonResponse = await response.Content.ReadAsStringAsync();
                     CampaignBsDTO campaigns = JsonConvert.DeserializeObject<CampaignBsDTO>(jsonResponse);
-
-                    //return campaigns;
                 }
                 else
                 {
@@ -207,8 +201,6 @@ namespace BackingServices
             try
             {
                 HttpClient campaignMS = new HttpClient();
-                //String CampignDeleteString = JsonConvert.SerializeObject(id);
-                //HttpContent CampaignUpdateHTTP = new StringContent(CampignDeleteString, Encoding.UTF8, "application/json");
 
                 string msPath = _configuration.GetSection("Microservices").GetSection("Campaigns").Value;
                 HttpResponseMessage response = await campaignMS.DeleteAsync($"{msPath}/api/campaigns/{id}");
@@ -218,8 +210,6 @@ namespace BackingServices
                 {
                     String jsonResponse = await response.Content.ReadAsStringAsync();
                     CampaignBsDTO campaigns = JsonConvert.DeserializeObject<CampaignBsDTO>(jsonResponse);
-
-                    
                 }
                 else
                 {

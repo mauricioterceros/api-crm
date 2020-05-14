@@ -13,44 +13,43 @@ namespace API_Gateway.Controllers
     public class CampaignController : ControllerBase
     {
         private readonly ICampaignBackingService _campaignBS;
+        private IConfiguration _configuration;
 
-        public CampaignController(ICampaignBackingService campaignBS)
+        public CampaignController(ICampaignBackingService campaignBS, IConfiguration configuration)
         {
             _campaignBS = campaignBS;
+            _configuration = configuration;
         }
 
         [HttpGet]
         [Route("")]
         public IEnumerable<CampaignBsDTO> GetAll()
         {
-            return _campaignBS.GetAllCampaign().Result;
+            return _campaignBS.GetAllCampaigns().Result;
         }
 
         [HttpGet]
         [Route("active")]
         public CampaignBsDTO GetActive()
         {
-            return _campaignBS.GetCampaignActivate().Result;
+            return _campaignBS.GetCampaignActive().Result;
         }
 
         [HttpPost]
         [Route("")]
         public CampaignBsDTO Post([FromBody] CampaignBsDTO campaign)
         {
-            //Console.WriteLine("from post => " + campaign.Id + " - " + campaign.Name + " - " + campaign.Type + " - " + campaign.Description);
-            
+            var dbServer = _configuration.GetSection("Database").GetSection("ServerName");
+            campaign.Name = $"{campaign.Name} data from {dbServer.Value}";
+
             return _campaignBS.AddNewCampaign(campaign).Result;
-            
         }
         
-        // PUT: api/Campaign/5
         [HttpPut]
         [Route("{id}")]
         public void Put([FromBody]CampaignBsDTO campaign, string id)
         {
-
             _campaignBS.UpdateCampaing(campaign, id);
-
         }
         
         [HttpPost]
@@ -65,7 +64,6 @@ namespace API_Gateway.Controllers
         public void Deactivate(string id)
         {
             _campaignBS.DeactivateCampaign(id);
-            
         }
         
         [HttpDelete]
