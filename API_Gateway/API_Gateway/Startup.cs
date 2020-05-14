@@ -37,9 +37,11 @@ namespace API_Gateway
         {
             services.AddControllers();
 
-            services.AddTransient<IQuoteBackingService, QuoteBackingService>();
-            services.AddTransient<IPricingBookBs, PricingBooksBs>();
 
+            services.AddTransient<IPricingBookBs, PricingBooksBs>();
+            services.AddTransient<IClientsBackingService, ClientsBackingService>();
+            services.AddTransient<IQuoteBackingService, QuoteBackingService>();
+            services.AddTransient<IClientsBackingService, ClientsBackingService>();
             services.AddCors(options =>
             {
                 options.AddPolicy("AllowAll",
@@ -91,11 +93,21 @@ namespace API_Gateway
                 endpoints.MapControllers();
             });
 
+            var swaggerTitle = Configuration
+                .GetSection(SWAGGER_SECTION_SETTING_KEY)
+                .GetSection(SWAGGER_SECTION_SETTING_TITLE_KEY);
+            var swaggerVersion = Configuration
+                .GetSection(SWAGGER_SECTION_SETTING_KEY)
+                .GetSection(SWAGGER_SECTION_SETTING_VERSION_KEY); app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
+
             // COPY THIS TO ENABLE SWAGGER
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Group Selector");
+                c.SwaggerEndpoint($"/swagger/{swaggerVersion.Value}/swagger.json", swaggerTitle.Value);
             });
         }
     }
