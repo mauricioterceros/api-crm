@@ -7,8 +7,8 @@ namespace Services
     {
         public Task<QuoteBsDTO> AddNewQuote(QuoteBsDTO newQuote);
         public Task<List<QuoteBsDTO>> GetQuoteList();
-        public void UpdateQuote(string id, QuoteBsDTO updatedQuote);
-        void DeleteByID(string id);
-        void UpdateSale(string id, bool state);
+        public Task<string> UpdateQuote(string id, QuoteBsDTO updatedQuote);
+        Task<string> DeleteByID(string id);
+        Task<string> UpdateSale(string id, bool state);
     }
 }
