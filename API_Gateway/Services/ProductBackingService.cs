@@ -50,13 +50,13 @@ namespace BackingServices
                 }
                 else
                 {
-                    // something wrong happens!
-                    throw new NotImplementedException();
+                    throw new BadRequestException("Something wrong happens!");
+
                 }
             }
-            catch (Exception ex)
+            catch (BackingServiceException ex)
             {
-                throw new BackingServiceException("Connection with Products is not working! " + msPath);
+                throw new BackingServiceException("Connection with Products is not working! ");
 
             }
 
@@ -82,12 +82,12 @@ namespace BackingServices
                 else
                 {
                     // something wrong happens!
-                    throw new NotImplementedException();
+                    throw new BadRequestException("Something wrong happens!");
                 }
             }
-            catch (Exception ex)
+            catch (BackingServiceException ex)
             {
-                throw new BackingServiceException("Connection with Products is not working! " + msPath);
+                throw new BackingServiceException("Connection with Products is not working!");
 
             }
 
@@ -113,12 +113,12 @@ namespace BackingServices
                 else
                 {
                     // something wrong happens!
-                    throw new NotImplementedException();
+                    throw new BadRequestException("Something wrong happens!");
                 }
             }
-            catch (Exception ex)
+            catch (BackingServiceException ex)
             {
-                throw new BackingServiceException("Connection with Products is not working! " + msPath);
+                throw new BackingServiceException("Connection with Products is not working! " );
 
             }
         }
@@ -140,12 +140,12 @@ namespace BackingServices
                 }
                 else
                 {
-                    throw new NotImplementedException();
+                    throw new BadRequestException("Something wrong happens!");
                 }
             }
-            catch (Exception ex)
+            catch (BackingServiceException ex)
             {
-                throw new BackingServiceException("Connection with Products is not working! " + msPath);
+                throw new BackingServiceException("Connection with Products is not working! " );
 
             }
         }

@@ -12,6 +12,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Services;
 using BackingServices;
+using API_Gateway.Middleware;
 
 namespace API_Gateway
 {
@@ -81,10 +82,10 @@ namespace API_Gateway
             }
 
             //app.UseHttpsRedirection();
+            app.UseExceptionHandlerMiddleware();
 
             app.UseRouting();
 
-            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
