@@ -1,7 +1,8 @@
-    using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BackingServices;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -11,7 +12,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Services;
-using BackingServices;
 using API_Gateway.Middleware;
 
 namespace API_Gateway
@@ -39,13 +39,13 @@ namespace API_Gateway
         {
             services.AddControllers();
 
-
-           
             services.AddTransient<IPricingBookBs, PricingBooksBs>();
             services.AddTransient<IClientsBackingService, ClientsBackingService>();
             services.AddTransient<IQuoteBackingService, QuoteBackingService>();
             services.AddTransient<IClientsBackingService, ClientsBackingService>();
             services.AddTransient<IProductBackingService, ProductBackingService>();
+            services.AddTransient<ICampaignBackingService, CampaignBackingService>();
+
             services.AddCors(options =>
             {
                 options.AddPolicy("AllowAll",
