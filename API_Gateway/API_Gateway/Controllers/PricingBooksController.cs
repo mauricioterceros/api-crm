@@ -27,20 +27,20 @@ namespace API_Gateway.Controllers
         {
             return _pricingDB.GetAll().Result;
         }
-        [HttpGet]
-        [Route("active")]
-        public PricingBookBsDTO GetActivePricingBook()
-        {
-            return _pricingDB.GetActivePricingBook().Result;
-        }
         [HttpPost]
         [Route("")]
         public PricingBookBsDTO PostPricingBooks([FromBody]PricingBookBsDTO NewPB)
         {
             return _pricingDB.AddNew(NewPB).Result;
         }
-       
-        
+        [HttpGet]
+        [Route("active")]
+        public PricingBookBsDTO GetActivePricingBook()
+        {
+            return _pricingDB.GetActivePricingBook().Result;
+        } 
+
+
 
         [HttpPut]
         [Route("{id}")]
