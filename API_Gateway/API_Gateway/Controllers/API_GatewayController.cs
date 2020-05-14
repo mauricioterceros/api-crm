@@ -47,10 +47,17 @@ namespace API_Gateway.Controllers
         }
 
         [HttpPut]
-        [Route("{id}/{state}")]
-        public string PutSale(string id, bool state)
+        [Route("{id}/sell")]
+        public string PutSale(string id)
         {
-            return _quoteDB.UpdateSale(id, state).Result;
+            return _quoteDB.UpdateSale(id, true).Result;
+        }
+
+        [HttpPut]
+        [Route("{id}/cancel-sell")]
+        public string PutCancelSale(string id)
+        {
+            return _quoteDB.UpdateSale(id, false).Result;
         }
     }
 }
