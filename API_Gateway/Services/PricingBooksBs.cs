@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Net.Http;
 using Newtonsoft.Json;
 using BackingServices.Exceptions;
+using Serilog;
 
 namespace Services
 {
@@ -38,17 +39,19 @@ namespace Services
                     String jsonResponse = await response.Content.ReadAsStringAsync();
                     // Deserialize response
                     List<PricingBookBsDTO> pricings = JsonConvert.DeserializeObject<List<PricingBookBsDTO>>(jsonResponse);
-                    
+                    Log.Logger.Information("Successfull");
                     return pricings;
                 }
                 else
                 {
                     // something wrong happens!
+                    Log.Logger.Information("BS throws the error: " + statusCode);
                     throw new BackingServiceException("BS throws the error: " + statusCode);
                 }
             }
             catch (Exception ex)
             {
+                Log.Logger.Information("Connection with Products is not working: " + ex.Message);
                 throw new BackingServiceException("Connection with Products is not working: " + ex.Message);
             }
         }
@@ -71,17 +74,19 @@ namespace Services
                     String jsonResponse = await response.Content.ReadAsStringAsync();
                     // Deserialize response
                     PricingBookBsDTO pricing = JsonConvert.DeserializeObject<PricingBookBsDTO>(jsonResponse);
-
+                    Log.Logger.Information("Successfull");
                     return pricing;
                 }
                 else
                 {
+                    Log.Logger.Information("BS throws the error: " + statusCode);
                     // something wrong happens!
                     throw new BackingServiceException("BS throws the error: " + statusCode);
                 }
             }
             catch (Exception ex)
             {
+                Log.Logger.Information("Connection with Products is not working: " + ex.Message);
                 throw new BackingServiceException("Connection with Products is not working: " + ex.Message);
             }
         }
@@ -99,17 +104,19 @@ namespace Services
                     Console.WriteLine(jsonResponse);
                     // Deserialize response
                     PricingBookBsDTO pricings = JsonConvert.DeserializeObject<PricingBookBsDTO>(jsonResponse);
-
+                    Log.Logger.Information("Successfull");
                     return pricings;
                 }
                 else
                 {
+                    Log.Logger.Information("BS throws the error: " + statusCode);
                     // something wrong happens!
                     throw new BackingServiceException("BS throws the error: " + statusCode);
                 }
             }
             catch (Exception ex)
             {
+                Log.Logger.Information("Connection with Products is not working: " + ex.Message);
                 throw new BackingServiceException("Connection with Products is not working: " + ex.Message);
             }
         }
@@ -131,18 +138,20 @@ namespace Services
                 String jsonResponse = await response.Content.ReadAsStringAsync();
                 // Deserialize response
                 PricingBookBsDTO pricing = JsonConvert.DeserializeObject<PricingBookBsDTO>(jsonResponse);
-
-                return pricing;
+                    Log.Logger.Information("Successfull");
+                    return pricing;
             }
             else
             {
-                // something wrong happens!
-                throw new BackingServiceException("BS throws the error: " + statusCode);
+                    Log.Logger.Information("BS throws the error: " + statusCode);
+                    // something wrong happens!
+                    throw new BackingServiceException("BS throws the error: " + statusCode);
             }
         }
         catch (Exception ex)
         {
-            throw new BackingServiceException("Connection with Products is not working: " + ex.Message);
+                Log.Logger.Information("Connection with Products is not working: " + ex.Message);
+                throw new BackingServiceException("Connection with Products is not working: " + ex.Message);
         }
     
 
@@ -155,17 +164,20 @@ namespace Services
                 int statusCode = (int)response.StatusCode;
                 if (statusCode == 200) // OK
                 {
+                    Log.Logger.Information("Successfull");
                     return true;
                 }
                 else
                 {
                     // something wrong happens!
+                    Log.Logger.Information("BS throws the error: " + statusCode);
                     throw new BackingServiceException("BS throws the error: " + statusCode);
                   
                 }
             }
             catch (Exception ex)
             {
+                Log.Logger.Information("Connection with Products is not working: " + ex.Message);
                 throw new BackingServiceException("Connection with Products is not working: " + ex.Message);
             }
         }
@@ -181,17 +193,19 @@ namespace Services
                     // Read ASYNC response from HTTPResponse 
                     String jsonResponse = await response.Content.ReadAsStringAsync();
                     // Deserialize response
-
+                    Log.Logger.Information("Successfull");
                     return jsonResponse;
                 }
                 else
                 {
                     // something wrong happens!
+                    Log.Logger.Information("BS throws the error: " + statusCode);
                     throw new BackingServiceException("BS throws the error: " + statusCode);
                 }
             }
             catch (Exception ex)
             {
+                Log.Logger.Information("Connection with Products is not working: " + ex.Message);
                 throw new BackingServiceException("Connection with Products is not working: " + ex.Message);
             }
 
@@ -207,17 +221,19 @@ namespace Services
                     // Read ASYNC response from HTTPResponse 
                     String jsonResponse = await response.Content.ReadAsStringAsync();
                     // Deserialize response
-
+                    Log.Logger.Information("Successfull");
                     return jsonResponse;
                 }
                 else
                 {
                     // something wrong happens!
+                    Log.Logger.Information("BS throws the error: " + statusCode);
                     throw new BackingServiceException("BS throws the error: " + statusCode);
                 }
             }
             catch (Exception ex)
             {
+                Log.Logger.Information("Connection with Products is not working: " + ex.Message);
                 throw new BackingServiceException("Connection with Products is not working: " + ex.Message);
             }
         }
@@ -239,17 +255,19 @@ namespace Services
                     String jsonResponse = await response.Content.ReadAsStringAsync();
                     // Deserialize response
                     PricingBookBsDTO pricing = JsonConvert.DeserializeObject<PricingBookBsDTO>(jsonResponse);
-
+                    Log.Logger.Information("Successfull");
                     return pricing;
                 }
                 else
                 {
                     // something wrong happens!
+                    Log.Logger.Information("BS throws the error: " + statusCode);
                     throw new BackingServiceException("BS throws the error: " + statusCode);
                 }
             }
             catch (Exception ex)
             {
+                Log.Logger.Information("Connection with Products is not working: " + ex.Message);
                 throw new BackingServiceException("Connection with Products is not working: " + ex.Message);
             }
         }
@@ -271,16 +289,19 @@ namespace Services
                     String jsonResponse = await response.Content.ReadAsStringAsync();
                     // Deserialize response
                     List<ProductPriceBsDTO> productPrice = JsonConvert.DeserializeObject<List<ProductPriceBsDTO>>(jsonResponse);
+                    Log.Logger.Information("Successfull");
                     return productPrice;
                 }
                 else
                 {
                     // something wrong happens!
+                    Log.Logger.Information("BS throws the error: " + statusCode);
                     throw new BackingServiceException("BS throws the error: " + statusCode);
                 }
             }
             catch (Exception ex)
             {
+                Log.Logger.Information("Connection with Products is not working: " + ex.Message);
                 throw new BackingServiceException("Connection with Products is not working: " + ex.Message);
             }
         }
@@ -301,17 +322,19 @@ namespace Services
                     String jsonResponse = await response.Content.ReadAsStringAsync();
                     // Deserialize response
                     PricingBookBsDTO pricing = JsonConvert.DeserializeObject<PricingBookBsDTO>(jsonResponse);
-
+                    Log.Logger.Information("Successfull");
                     return pricing;
                 }
                 else
                 {
                     // something wrong happens!
+                    Log.Logger.Information("BS throws the error: " + statusCode);
                     throw new BackingServiceException("BS throws the error: " + statusCode);
                 }
             }
             catch (Exception ex)
             {
+                Log.Logger.Information("Connection with Products is not working: " + ex.Message);
                 throw new BackingServiceException("Connection with Products is not working: " + ex.Message);
             }
         }
@@ -328,18 +351,20 @@ namespace Services
                     // Read ASYNC response from HTTPResponse 
                     String jsonResponse = await response.Content.ReadAsStringAsync();
                     // Deserialize response
-
+                    Log.Logger.Information("Successfull");
                     return jsonResponse;
 
                 }
                 else
                 {
                     // something wrong happens!
+                    Log.Logger.Information("BS throws the error: " + statusCode);
                     throw new BackingServiceException("BS throws the error: " + statusCode);
                 }
             }
             catch (Exception ex)
             {
+                Log.Logger.Information("Connection with Products is not working: " + ex.Message);
                 throw new BackingServiceException("Connection with Products is not working: " + ex.Message);
             }
         }
@@ -356,18 +381,20 @@ namespace Services
                     // Read ASYNC response from HTTPResponse 
                     String jsonResponse = await response.Content.ReadAsStringAsync();
                     // Deserialize response
-                  
+                    Log.Logger.Information("Successfull");
                     return jsonResponse;
 
                 }
                 else
                 {
                     // something wrong happens!
+                    Log.Logger.Information("BS throws the error: " + statusCode);
                     throw new BackingServiceException("BS throws the error: " + statusCode);
                 }
             }
             catch (Exception ex)
             {
+                Log.Logger.Information("Connection with Products is not working: " + ex.Message);
                 throw new BackingServiceException("Connection with Products is not working: " + ex.Message);
             }
         }

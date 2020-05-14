@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Services;
+using Serilog;
 
 namespace API_Gateway.Controllers
 {
@@ -24,6 +25,7 @@ namespace API_Gateway.Controllers
         [Route("clients")]
         public List<ClientsBsDTO> GetClient()
         {
+            Log.Logger.Information("Client trying to Get Clients list: ");
             return _clientsDB.GetClients().Result;
         }
 
@@ -31,6 +33,7 @@ namespace API_Gateway.Controllers
         [Route("rankings")]
         public List<RankingDTO> GetRanks()
         {
+            Log.Logger.Information("Client trying to Get Rankings list: ");
             return _clientsDB.GetRankings().Result;
 
         }
@@ -39,12 +42,14 @@ namespace API_Gateway.Controllers
         [Route("clients")]
         public ClientsBsDTO AddNewClient([FromBody]ClientsBsDTO newClientdto)
         {
+            Log.Logger.Information("Client trying to Create a New Client: "+newClientdto);
             return _clientsDB.AddNewClient(newClientdto).Result;
         }
         [HttpPut]
         [Route("clients/{code}")]
         public Task<ClientsBsDTO> UpdateProduct(string code, [FromBody]ClientsBsDTO clientToUpdate)
         {
+            Log.Logger.Information("Client trying to Update Client: " + clientToUpdate);
             return _clientsDB.UpdateClient(code, clientToUpdate);
         }
 
@@ -52,6 +57,7 @@ namespace API_Gateway.Controllers
         [Route("clients/{code}")]
         public Task<bool> DeleteProduct(string code)
         {
+            Log.Logger.Information("Client trying to Delete Client: " + code);
             return _clientsDB.DeleteClient(code);
         }
 
