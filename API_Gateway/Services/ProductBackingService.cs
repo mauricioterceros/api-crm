@@ -8,6 +8,7 @@ using Newtonsoft.Json.Linq;
 using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Serilog;
 
 namespace BackingServices
 {
