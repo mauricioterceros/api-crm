@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Services;
+using API_Gateway.Middleware;
 
 namespace API_Gateway
 {
@@ -37,9 +38,14 @@ namespace API_Gateway
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddTransient<ICampaignBackingService, CampaignBackingService>();
+
+            services.AddTransient<IPricingBookBs, PricingBooksBs>();
+            services.AddTransient<IClientsBackingService, ClientsBackingService>();
             services.AddTransient<IQuoteBackingService, QuoteBackingService>();
-            
+            services.AddTransient<IClientsBackingService, ClientsBackingService>();
+            services.AddTransient<IProductBackingService, ProductBackingService>();
+            services.AddTransient<ICampaignBackingService, CampaignBackingService>();
+
             services.AddCors(options =>
             {
                 options.AddPolicy("AllowAll",
@@ -47,6 +53,7 @@ namespace API_Gateway
                                       .AllowAnyHeader()
                                       .AllowAnyMethod()
                                       );
+
             });
 
             var swaggerTitle = Configuration
@@ -80,12 +87,22 @@ namespace API_Gateway
             }
 
             //app.UseHttpsRedirection();
+            app.UseExceptionHandlerMiddleware();
 
             app.UseRouting();
 
-            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
+
+            var swaggerTitle = Configuration
+                .GetSection(SWAGGER_SECTION_SETTING_KEY)
+                .GetSection(SWAGGER_SECTION_SETTING_TITLE_KEY);
+            var swaggerVersion = Configuration
+                .GetSection(SWAGGER_SECTION_SETTING_KEY)
+                .GetSection(SWAGGER_SECTION_SETTING_VERSION_KEY); app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
@@ -94,7 +111,7 @@ namespace API_Gateway
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Group Selector");
+                c.SwaggerEndpoint($"/swagger/{swaggerVersion.Value}/swagger.json", swaggerTitle.Value);
             });
         }
     }

@@ -4,10 +4,13 @@ using System.Text;
 
 namespace Services
 {
-    public class QuoteProductsBsDTO
+    public class ProductPriceBsDTO
     {
         public string ProductCode { get; set; }
-        public int Quantity { get; set; }
-        public float Price { get; set; }
+
+        public double FixedPrice { get; set; }
+
+        public double PromotionPrice { get; set; }
+
     }
 }
