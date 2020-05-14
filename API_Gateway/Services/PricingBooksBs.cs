@@ -52,7 +52,35 @@ namespace Services
                 throw new BackingServiceException("Connection with Products is not working: " + ex.Message);
             }
         }
-       
+        public async Task<PricingBookBsDTO> GetActivePricingBook()
+        {
+            try
+            {
+                //HttpContent content = new HttpContent();
+                HttpResponseMessage response = await productMS.GetAsync($"{msPath}/pricing-books/active");
+                int statusCode = (int)response.StatusCode;
+                if (statusCode == 200) // OK
+                {
+                    // Read ASYNC response from HTTPResponse 
+                    String jsonResponse = await response.Content.ReadAsStringAsync();
+                    Console.WriteLine(jsonResponse);
+                    // Deserialize response
+                    PricingBookBsDTO pricings = JsonConvert.DeserializeObject<PricingBookBsDTO>(jsonResponse);
+
+                    return pricings;
+                }
+                else
+                {
+                    // something wrong happens!
+                    throw new BackingServiceException("BS throws the error: " + statusCode);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new BackingServiceException("Connection with Products is not working: " + ex.Message);
+            }
+        }
+
         //Post
         public async Task<PricingBookBsDTO> AddNew(PricingBookBsDTO newPricingBook)
         {

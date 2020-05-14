@@ -10,6 +10,7 @@ namespace Services
     {
         //IPriceLogic 
         public  Task<List<PricingBookBsDTO>> GetAll();//
+        public Task<PricingBookBsDTO> GetActivePricingBook();
         public Task<PricingBookBsDTO> Update(PricingBookBsDTO pricingBookToUpdate, string id);//
         public Task<PricingBookBsDTO> AddNew(PricingBookBsDTO newPricingBook);//
         public Task<bool> DeleteListProduct(string code);
