@@ -15,6 +15,7 @@ using Services;
 using API_Gateway.Middleware;
 using Serilog;
 using Serilog.Events;
+using Microsoft.AspNetCore.Authentication;
 
 namespace API_Gateway
 {
@@ -54,11 +55,12 @@ namespace API_Gateway
 
             services.AddTransient<IPricingBookBs, PricingBooksBs>();
             services.AddTransient<IClientsBackingService, ClientsBackingService>();
+            services.AddSingleton<IUsersDB, UsersDB>();
             services.AddTransient<IQuoteBackingService, QuoteBackingService>();
             services.AddTransient<IClientsBackingService, ClientsBackingService>();
             services.AddTransient<IProductBackingService, ProductBackingService>();
             services.AddTransient<ICampaignBackingService, CampaignBackingService>();
-
+            
             services.AddCors(options =>
             {
                 options.AddPolicy("AllowAll",
@@ -101,6 +103,8 @@ namespace API_Gateway
 
             //app.UseHttpsRedirection();
             app.UseExceptionHandlerMiddleware();
+            //Middlewares
+            app.UseMiddleware(typeof(AuthenticationMiddleware));
 
             app.UseRouting();
 
