@@ -11,6 +11,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Services;
+using BackingServices;
+using API_Gateway.Middleware;
 
 namespace API_Gateway
 {
@@ -38,10 +40,12 @@ namespace API_Gateway
             services.AddControllers();
 
 
+           
             services.AddTransient<IPricingBookBs, PricingBooksBs>();
             services.AddTransient<IClientsBackingService, ClientsBackingService>();
             services.AddTransient<IQuoteBackingService, QuoteBackingService>();
             services.AddTransient<IClientsBackingService, ClientsBackingService>();
+            services.AddTransient<IProductBackingService, ProductBackingService>();
             services.AddCors(options =>
             {
                 options.AddPolicy("AllowAll",
@@ -83,10 +87,10 @@ namespace API_Gateway
             }
 
             //app.UseHttpsRedirection();
+            app.UseExceptionHandlerMiddleware();
 
             app.UseRouting();
 
-            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
