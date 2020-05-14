@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using BackingServices.Exceptions;
+using Serilog;
 
 namespace BackingServices
 {
@@ -33,17 +34,20 @@ namespace BackingServices
                 {
                     String jsonResponse = await response.Content.ReadAsStringAsync();
                     IEnumerable<CampaignBsDTO> campaigns = JsonConvert.DeserializeObject<IEnumerable<CampaignBsDTO>>(jsonResponse);
-
+                    Log.Logger.Information("Succesfull");
                     return campaigns;
                 }
                 else
                 {
+                    Log.Logger.Information("BS throws the error: " + statusCode);
                     throw new BackingServiceException("BS throws the error: " + statusCode);
                 }
             }
             catch (Exception ex)
             {
-              throw new BackingServiceException("Connection with Campigns is not working: " + ex.Message);
+                Log.Logger.Information("Connection with Campaigns is not working: " + ex.Message);
+
+                throw new BackingServiceException("Connection with Campaigns is not working: " + ex.Message);
             }
         }
 
@@ -63,17 +67,19 @@ namespace BackingServices
                 {
                     String jsonResponse = await response.Content.ReadAsStringAsync();
                     CampaignBsDTO campaigns = JsonConvert.DeserializeObject<CampaignBsDTO>(jsonResponse);
-
+                    Log.Logger.Information("Succesfull");
                     return campaigns;
                 }
                 else
                 {
+                    Log.Logger.Information("BS throws the error: " + statusCode);
                     throw new BackingServiceException("BS throws the error: " + statusCode);
                 }
             }
             catch (Exception ex)
             {
-                throw new BackingServiceException("Connection with Campigns is not working: " + ex.Message);
+                Log.Logger.Information("Connection with Campaigns is not working: " + ex.Message);
+                throw new BackingServiceException("Connection with Campaigns is not working: " + ex.Message);
             }
         }
         
@@ -96,17 +102,19 @@ namespace BackingServices
                     String jsonResponse = await response.Content.ReadAsStringAsync();
                     
                     CampaignBsDTO campaigns = JsonConvert.DeserializeObject<CampaignBsDTO>(jsonResponse);
-
+                    Log.Logger.Information("Succesfull");
                     return campaigns;
                 }
                 else
                 {
+                    Log.Logger.Information("BS throws the error: " + statusCode);
                     throw new BackingServiceException("BS throws the error: " + statusCode);
                 }
             }
             catch (Exception ex)
             {
-                throw new BackingServiceException("Connection with Campigns is not working: " + ex.Message);
+                Log.Logger.Information("Connection with Campaigns is not working: " + ex.Message);
+                throw new BackingServiceException("Connection with Campaigns is not working: " + ex.Message);
             }
         }
 
@@ -128,15 +136,18 @@ namespace BackingServices
                 {
                     String jsonResponse = await response.Content.ReadAsStringAsync();
                     CampaignBsDTO campaigns = JsonConvert.DeserializeObject<CampaignBsDTO>(jsonResponse);
+                    Log.Logger.Information("Succesfull");
                 }
                 else
                 {
+                    Log.Logger.Information("BS throws the error: " + statusCode);
                     throw new BackingServiceException("BS throws the error: " + statusCode);
                 }
             }
             catch (Exception ex)
             {
-                throw new BackingServiceException("Connection with Campigns is not working: " + ex.Message);
+                Log.Logger.Information("Connection with Campaigns is not working: " + ex.Message);
+                throw new BackingServiceException("Connection with Campaigns is not working: " + ex.Message);
             }
 
         }
@@ -156,15 +167,19 @@ namespace BackingServices
                 {
                     String jsonResponse = await response.Content.ReadAsStringAsync();
                     CampaignBsDTO campaigns = JsonConvert.DeserializeObject<CampaignBsDTO>(jsonResponse);
+                    Log.Logger.Information("Succesfull");
                 }
                 else
                 {
+                    Log.Logger.Information("BS throws the error: " + statusCode);
                     throw new BackingServiceException("BS throws the error: " + statusCode);
                 }
             }
             catch (Exception ex)
             {
-                throw new BackingServiceException("Connection with Campigns is not working: " + ex.Message);
+
+                Log.Logger.Information("Connection with Campaigns is not working: " + ex.Message);
+                throw new BackingServiceException("Connection with Campaigns is not working: " + ex.Message);
             }
         }
 
@@ -183,15 +198,18 @@ namespace BackingServices
                 {
                     String jsonResponse = await response.Content.ReadAsStringAsync();
                     CampaignBsDTO campaigns = JsonConvert.DeserializeObject<CampaignBsDTO>(jsonResponse);
+                    Log.Logger.Information("Succesfull");
                 }
                 else
                 {
+                    Log.Logger.Information("BS throws the error: " + statusCode);
                     throw new BackingServiceException("BS throws the error: " + statusCode);
                 }
             }
             catch (Exception ex)
             {
-                throw new BackingServiceException("Connection with Campigns is not working: " + ex.Message);
+                Log.Logger.Information("Connection with Campigns is not working: " + ex.Message);
+                throw new BackingServiceException("Connection with Campaigns is not working: " + ex.Message);
             }
         }
         
@@ -210,15 +228,18 @@ namespace BackingServices
                 {
                     String jsonResponse = await response.Content.ReadAsStringAsync();
                     CampaignBsDTO campaigns = JsonConvert.DeserializeObject<CampaignBsDTO>(jsonResponse);
+                    Log.Logger.Information("Succesfull");
                 }
                 else
                 {
+                    Log.Logger.Information("BS throws the error: " + statusCode);
                     throw new BackingServiceException("BS throws the error: " + statusCode);
                 }
             }
             catch (Exception ex)
             {
-                throw new BackingServiceException("Connection with Campigns is not working: " + ex.Message);
+                Log.Logger.Information("Connection with Campaigns is not working: " + ex.Message);
+                throw new BackingServiceException("Connection with Campaigns is not working: " + ex.Message);
             }
         }
     }

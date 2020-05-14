@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Services;
 using BackingServices;
+using Serilog;
 
 namespace API_Gateway.Controllers
 {
@@ -23,6 +24,7 @@ namespace API_Gateway.Controllers
         [Route("")]
         public List<ProductBsDTO> GetAll()
         {
+            Log.Logger.Information("Client trying to Products list");
             return _productDB.GetAllProduct().Result;
         }
 
@@ -30,6 +32,7 @@ namespace API_Gateway.Controllers
         [Route("")]
         public ProductBsDTO PostProduct([FromBody] ProductBsDTO newproductDTO)
         {
+            Log.Logger.Information("Client trying to Create a new Product: "+newproductDTO.Code);
             return _productDB.AddNew(newproductDTO).Result;
         }
 
@@ -38,7 +41,7 @@ namespace API_Gateway.Controllers
         public ProductBsDTO PutProduct(string id, [FromBody] ProductBsDTO updateProduct)
         {
 
-
+            Log.Logger.Information("Client trying to Update Product: " + updateProduct.Code);
             return _productDB.Update(updateProduct, id).Result;
 
         }
@@ -47,6 +50,7 @@ namespace API_Gateway.Controllers
         [Route("{id}")]
         public bool Delete(string id)
         {
+            Log.Logger.Information("Client trying to Delete Product: " + id);
             return _productDB.Delete(id).Result;
         }
     }

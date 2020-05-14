@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Services;
 using BackingServices;
+using Serilog;
 
 namespace API_Gateway.Controllers
 {

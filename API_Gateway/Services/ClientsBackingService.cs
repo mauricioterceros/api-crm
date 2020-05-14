@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Serilog;
 
 namespace Services
 {
@@ -34,11 +35,13 @@ namespace Services
                     String jsonResponse = await response.Content.ReadAsStringAsync();
                     // Deserialize response
                     ClientsBsDTO AddedClient = JsonConvert.DeserializeObject<ClientsBsDTO>(jsonResponse);
+                    Log.Logger.Information("Succesfull ");
                     return AddedClient;
                 }
                 else
                 {
                     // something wrong happens!
+                    Log.Logger.Information("BS throws the error: " + statusCode);
                     Console.WriteLine("BS throws the error: " + statusCode);
                     throw new BackingServiceException("BS throws the error: " + statusCode);
                 }
@@ -46,7 +49,8 @@ namespace Services
             catch (Exception ex)
             {
                 //Console.WriteLine("Connection with Products is not working: " + msPath);
-                throw new BackingServiceException("Connection with Products is not working: " + ex.Message);
+                Log.Logger.Information("Connection with Clients is not working: " + ex.Message);
+                throw new BackingServiceException("Connection with Clients is not working: " + ex.Message);
             }
             throw new NotImplementedException();
         }
@@ -73,12 +77,13 @@ namespace Services
                     String jsonResponse = await response.Content.ReadAsStringAsync();
                     // Deserialize response
                     List<RankingDTO> ranks = JsonConvert.DeserializeObject<List<RankingDTO>>(jsonResponse);
-
+                    Log.Logger.Information("Succesfull ");
                     return ranks;
                 }
                 else
                 {
                     // something wrong happens!
+                    Log.Logger.Information("BS throws the error: " + statusCode);
                     Console.WriteLine("BS throws the error: " + statusCode);
                     throw new BackingServiceException("BS throws the error: " + statusCode);
                 }
@@ -86,7 +91,8 @@ namespace Services
             catch (Exception ex)
             {
                 //Console.WriteLine("Connection with Products is not working: " + msPath);
-                throw new BackingServiceException("Connection with Products is not working: " + ex.Message);
+                Log.Logger.Information("Connection with Clients is not working: " + ex.Message);
+                throw new BackingServiceException("Connection with Clients is not working: " + ex.Message);
             }
 
 
@@ -114,12 +120,13 @@ namespace Services
                     String jsonResponse = await response.Content.ReadAsStringAsync();
                     // Deserialize response
                     List<ClientsBsDTO> clients = JsonConvert.DeserializeObject<List<ClientsBsDTO>>(jsonResponse);
-
+                    Log.Logger.Information("Succesfull ");
                     return clients;
                 }
                 else
                 {
                     // something wrong happens!
+                    Log.Logger.Information("BS throws the error: " + statusCode);
                     Console.WriteLine("BS throws the error: " + statusCode);
                     throw new BackingServiceException("BS throws the error: " + statusCode);
                 }
@@ -127,7 +134,8 @@ namespace Services
             catch (Exception ex)
             {
                 //Console.WriteLine("Connection with Products is not working: " + msPath);
-                throw new BackingServiceException("Connection with Products is not working: " + ex.Message);
+                Log.Logger.Information("Connection with Clients is not working: " + ex.Message);
+                throw new BackingServiceException("Connection with Clients is not working: " + ex.Message);
             }
 
 
@@ -148,11 +156,13 @@ namespace Services
                 {
                     String jsonResponse = await response.Content.ReadAsStringAsync();
                     ClientsBsDTO UpdatedClient = JsonConvert.DeserializeObject<ClientsBsDTO>(jsonResponse);
+                    Log.Logger.Information("Succesfull ");
                     return UpdatedClient;
                 }
                 else
                 {
                     // something wrong happens!
+                    Log.Logger.Information("BS throws the error: " + statusCode);
                     Console.WriteLine("BS throws the error: " + statusCode);
                     throw new BackingServiceException("BS throws the error: " + statusCode);
                 }
@@ -160,7 +170,8 @@ namespace Services
             catch (Exception ex)
             {
                 //Console.WriteLine("Connection with Products is not working: " + msPath);
-                throw new BackingServiceException("Connection with Products is not working: " + ex.Message);
+                Log.Logger.Information("Connection with Clients is not working: " + ex.Message);
+                throw new BackingServiceException("Connection with Clients is not working: " + ex.Message);
             }
             throw new NotImplementedException();
         }
@@ -183,6 +194,7 @@ namespace Services
 
                     if (deletedClient == true)
                     {
+                        Log.Logger.Information("Succesfull ");
                         return deletedClient;
                     }
                     else
@@ -193,6 +205,7 @@ namespace Services
                 else
                 {
                     // something wrong happens!
+                    Log.Logger.Information("BS throws the error: " + statusCode);
                     Console.WriteLine("BS throws the error: " + statusCode);
                     throw new BackingServiceException("BS throws the error: " + statusCode + " Entro al Else ");
                 }
@@ -200,7 +213,8 @@ namespace Services
             catch (Exception ex)
             {
                 //Console.WriteLine("Connection with Products is not working: " + msPath);
-                throw new BackingServiceException("Connection with Products is not working: " + ex.Message);
+                Log.Logger.Information("Connection with Clients is not working: " + ex.Message);
+                throw new BackingServiceException("Connection with Clients is not working: " + ex.Message);
             }
             throw new NotImplementedException();
         }

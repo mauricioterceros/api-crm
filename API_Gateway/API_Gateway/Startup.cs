@@ -13,6 +13,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Services;
 using API_Gateway.Middleware;
+using Serilog;
+using Serilog.Events;
 
 namespace API_Gateway
 {
@@ -30,6 +32,17 @@ namespace API_Gateway
                 .AddEnvironmentVariables();
 
             Configuration = builder.Build();
+
+            string logpath = Configuration.GetSection("Logging").GetSection("FileLocation").Value;
+
+            Log.Logger = new LoggerConfiguration()
+                .MinimumLevel
+                .Information()
+                .WriteTo.Console()
+                .WriteTo.RollingFile(logpath, LogEventLevel.Information)
+                .CreateLogger();
+
+            Log.Information("This app is using the config file: " + $"appsettings.{env.EnvironmentName}.json");
         }
 
         public IConfiguration Configuration { get; }

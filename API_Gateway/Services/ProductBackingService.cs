@@ -8,6 +8,7 @@ using Newtonsoft.Json.Linq;
 using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Serilog;
 
 namespace BackingServices
 {
@@ -46,16 +47,19 @@ namespace BackingServices
                     String jsonResponse = await response.Content.ReadAsStringAsync();
                     // Deserialize response
                     List<ProductBsDTO> products = JsonConvert.DeserializeObject<List<ProductBsDTO>>(jsonResponse);
+                    Log.Logger.Information("Succesfull");
                     return products;
                 }
                 else
                 {
+                    Log.Logger.Information("Something wrong happens!");
                     throw new BadRequestException("Something wrong happens!");
 
                 }
             }
             catch (BackingServiceException ex)
             {
+                Log.Logger.Information("Connection with Products is not working: " + ex.Message);
                 throw new BackingServiceException("Connection with Products is not working! ");
 
             }
@@ -77,16 +81,19 @@ namespace BackingServices
                     String jsonResponse = await response.Content.ReadAsStringAsync();
                     // Deserialize response
                     ProductBsDTO products = JsonConvert.DeserializeObject<ProductBsDTO>(jsonResponse);
+                    Log.Logger.Information("Succesfull");
                     return products;
                 }
                 else
                 {
+                    Log.Logger.Information("Something wrong happens!");
                     // something wrong happens!
                     throw new BadRequestException("Something wrong happens!");
                 }
             }
             catch (BackingServiceException ex)
             {
+                Log.Logger.Information("Connection with Products is not working: " + ex.Message);
                 throw new BackingServiceException("Connection with Products is not working!");
 
             }
@@ -108,16 +115,19 @@ namespace BackingServices
                     String jsonResponse = await response.Content.ReadAsStringAsync();
                     // Deserialize response
                     ProductBsDTO products = JsonConvert.DeserializeObject<ProductBsDTO>(jsonResponse);
+                    Log.Logger.Information("Succesfull");
                     return products;
                 }
                 else
                 {
+                    Log.Logger.Information("Something wrong happens!");
                     // something wrong happens!
                     throw new BadRequestException("Something wrong happens!");
                 }
             }
             catch (BackingServiceException ex)
             {
+                Log.Logger.Information("Connection with Products is not working: " + ex.Message);
                 throw new BackingServiceException("Connection with Products is not working! " );
 
             }
@@ -136,15 +146,18 @@ namespace BackingServices
                     // Deserialize response
                     //ProductBsDTO products = JsonConvert.DeserializeObject<ProductBsDTO>(jsonResponse);
                     bool answer = JsonConvert.DeserializeObject<bool>(jsonResponse);
+                    Log.Logger.Information("Succesfull");
                     return answer;
                 }
                 else
                 {
+                    Log.Logger.Information("Something wrong happens!");
                     throw new BadRequestException("Something wrong happens!");
                 }
             }
             catch (BackingServiceException ex)
             {
+                Log.Logger.Information("Connection with Products is not working: " + ex.Message);
                 throw new BackingServiceException("Connection with Products is not working! " );
 
             }
