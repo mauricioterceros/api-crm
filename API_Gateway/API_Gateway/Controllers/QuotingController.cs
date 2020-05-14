@@ -12,19 +12,12 @@ namespace API_Gateway.Controllers
 {
     [Route("api-crm/quotes")]
     [ApiController]
-    public class API_GatewayController : ControllerBase
+    public class QuotingController : ControllerBase
     {
         private readonly IQuoteBackingService _quoteDB;
-        public API_GatewayController(IQuoteBackingService productBS)
+        public QuotingController(IQuoteBackingService productBS)
         {
             _quoteDB = productBS;
-        }
-
-        [HttpPost]
-        [Route("")]
-        public QuoteBsDTO Post([FromBody] QuoteBsDTO newQuoteDTO)
-        {
-            return _quoteDB.AddNewQuote(newQuoteDTO).Result;
         }
 
         [HttpGet]
@@ -32,6 +25,13 @@ namespace API_Gateway.Controllers
         public List<QuoteBsDTO> Get()
         {
             return _quoteDB.GetQuoteList().Result;
+        }
+
+        [HttpPost]
+        [Route("")]
+        public QuoteBsDTO Post([FromBody] QuoteBsDTO newQuoteDTO)
+        {
+            return _quoteDB.AddNewQuote(newQuoteDTO).Result;
         }
 
         [HttpPut]

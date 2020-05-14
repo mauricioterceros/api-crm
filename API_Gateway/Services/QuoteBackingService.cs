@@ -1,6 +1,7 @@
 ﻿using BackingServices.Exceptions;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -41,17 +42,19 @@ namespace Services
                     String jsonResponse = await response.Content.ReadAsStringAsync();
                     // Deserialize response
                     QuoteBsDTO quote = JsonConvert.DeserializeObject<QuoteBsDTO>(jsonResponse);
-
+                    Log.Logger.Information("Succesfull");
                     return quote;
                 }
                 else
                 {
                     // something wrong happens!
+                    Log.Logger.Information("BS throws the error: " + statusCode);
                     throw new BackingServiceException("BS throws the error: " + statusCode);
                 }
             }
             catch (Exception ex)
             {
+                Log.Logger.Information("Connection with Quote Backing Service  is not working: " + ex.Message);
                 throw new BackingServiceException("Connection with Quote Backing Service  is not working: " + ex.Message);
             }
         }
@@ -74,18 +77,21 @@ namespace Services
                     // Deserialize response
                     List<QuoteBsDTO> quotes = JsonConvert.DeserializeObject<List<QuoteBsDTO>>(jsonResponse);
 
+                    Log.Logger.Information("Succesfull");
                     return quotes;
                 }
                 else
                 {
                     // something wrong happens!
+                    Log.Logger.Information("BS throws the error: " + statusCode);
                     throw new BackingServiceException("BS throws the error: " + statusCode);
                 }
             }
             catch (Exception ex)
             {
+                Log.Logger.Information("Connection with Quote Backing Service  is not working: " + ex.Message);
                 throw new BackingServiceException("Connection with Quote Backing Service  is not working: " + ex.Message);
-            }          
+            }
         }
         public async Task<string> UpdateQuote(string id, QuoteBsDTO updatedQuote)
         {
@@ -110,19 +116,20 @@ namespace Services
                     //QuoteBsDTO quote = JsonConvert.DeserializeObject<QuoteBsDTO>(jsonResponse);
 
                     //return quote;
+                    Log.Logger.Information("Succesfull");
                     return jsonResponse;
                 }
                 else
                 {
                     // something wrong happens!
+                    Log.Logger.Information("BS throws the error: " + statusCode);
                     throw new BackingServiceException("BS throws the error: " + statusCode);
-                    
                 }
             }
             catch (Exception ex)
             {
+                Log.Logger.Information("Connection with Quote Backing Service  is not working: " + ex.Message);
                 throw new BackingServiceException("Connection with Quote Backing Service  is not working: " + ex.Message);
-                
             }
         }
 
@@ -145,20 +152,20 @@ namespace Services
                     // Deserialize response
                     //  QuoteBsDTO quote = JsonConvert.DeserializeObject<QuoteBsDTO>(jsonResponse);
 
+                    Log.Logger.Information("Succesfull");
                     return jsonResponse;
                 }
                 else
                 {
                     // something wrong happens!
-                    Console.WriteLine("BS throws the error: " + statusCode);
+                    Log.Logger.Information("BS throws the error: " + statusCode);
                     throw new BackingServiceException("BS throws the error: " + statusCode);
-
                 }
             }
             catch (Exception ex)
             {
+                Log.Logger.Information("Connection with Quote Backing Service  is not working: " + ex.Message);
                 throw new BackingServiceException("Connection with Quote Backing Service  is not working: " + ex.Message);
-
             }
         }
         public async Task<string> UpdateSale(string id, bool state)
@@ -182,19 +189,21 @@ namespace Services
                     // Deserialize response
                     //QuoteBsDTO quote = JsonConvert.DeserializeObject<QuoteBsDTO>(jsonResponse);
 
+                    
+                    Log.Logger.Information("Succesfull");
                     return jsonResponse;
                 }
                 else
                 {
                     // something wrong happens!
+                    Log.Logger.Information("BS throws the error: " + statusCode);
                     throw new BackingServiceException("BS throws the error: " + statusCode);
-
                 }
             }
             catch (Exception ex)
             {
-                throw new BackingServiceException("Connection with Quote Backing Service is not working: " + ex.Message);
-
+                Log.Logger.Information("Connection with Quote Backing Service  is not working: " + ex.Message);
+                throw new BackingServiceException("Connection with Quote Backing Service  is not working: " + ex.Message);
             }
         }
     }
